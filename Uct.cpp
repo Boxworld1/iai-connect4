@@ -134,6 +134,7 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
         //     std::cerr << "\n";
         // }
         // std::cerr << "\n";
+        std::cerr << "Score: -1\n";
         return -1;
     }
     if (!player && machineWin(_x, _y, M, N, _board)) {
@@ -144,6 +145,8 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
         //     std::cerr << "\n";
         // }
         // std::cerr << "\n";
+
+        std::cerr << "Score: 1\n";
         return 1;
     }
     if (isTie(N, top)) return 0;
