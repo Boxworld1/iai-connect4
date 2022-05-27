@@ -26,7 +26,7 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
 
     // 记录子节点
     child = new Node*[N];
-    // std::cerr << "[Node::Node] init finished\n";
+    std::cerr << "[Node::Node] init finished\n";
 }
 
 Node* Node::bestChild() {
