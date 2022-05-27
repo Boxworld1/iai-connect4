@@ -100,6 +100,7 @@ Node* Node::expand() {
     Node* tmp = new Node(this, M, N, noX, noY, nxtX, nxtY, tmpTop, tmpBoard, !player);
     std::cerr << "[Node::expand] canMove size: " << canMove.size() << "\n";
     canMove.erase(canMove.begin() + idx);
+    countCanMove--;
     std::cerr << "[Node::expand] erase idx finished: " << idx << "\n";
 
     child[nxtY] = tmp;
