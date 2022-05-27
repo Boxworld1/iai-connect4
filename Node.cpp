@@ -152,4 +152,5 @@ Node::~Node() {
         delete[] board[i];
     }
     delete[] board;
+    delete[] child;
 }
