@@ -7,10 +7,16 @@ int **UCT::curBoard = nullptr;
 UCT::UCT() {}
 
 UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* _top, int** _board):
-    M(_M), N(_N), noX(_noX), noY(_noY), lastX(_lastX), lastY(_lastY) {
+    M(_M), N(_N), noX(_noX), noY(_noY) {
+    update(_lastX, _lastY, _top, _board);
+}
+
+void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
 
     // std::cerr << "[UCT::UCT] init\n";
     // 初始化
+    lastX = _lastX;
+    lastY = _lastY;
     root = nullptr;
     timer.set();
 
@@ -54,10 +60,25 @@ void UCT::boardReset() {
     }
 }
 
+void UCT::removeNode(Node* v, int x, int y) {
+    Node* newRoot = nullptr;
+    for (int i = 0; i < N; i++) {
+        if (i != y) {
+            delete v->child[i];
+        } else {
+            newRoot = v->child[i];
+        }
+    }
+    root = newRoot;
+}
+
 Point UCT::uctSearch() {
     // std::cerr << "[UCT::uctSearch] search started\n";
     boardReset();
-    root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
+    if (!root) {
+        root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
+    }
+
     while (timer.get() < TIME_LIMIT) {
         // std::cerr << "[UCT::uctSearch] check next node\n";
         // std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
@@ -68,7 +89,9 @@ Point UCT::uctSearch() {
         boardClear();
     }
 
-    return root->bestChild()->getMove();
+    Point tar = root->bestChild()->getMove();
+    // removeNode(root, tar.x, tar.y);
+    return tar;
 }
 
 Node* UCT::treePolicy(Node* v) {

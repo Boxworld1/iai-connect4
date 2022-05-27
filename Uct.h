@@ -26,8 +26,10 @@ class UCT {
 public:
     UCT();
     UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* _top, int** _board);
+    void update(int _lastX, int _lastY, const int* _top, int** _board);
     void boardClear();
     void boardReset();
+    void removeNode(Node* v, int x, int y);
     Point uctSearch();
     Node* treePolicy(Node* v);
     double defaultPolicy(Node* v);
