@@ -145,11 +145,21 @@ int** Node::getBoard() {
     return board;
 }
 
-Node::~Node() {
+void Node::clearArray() {
     delete[] top;
     for (int i = 0; i < M; i++) {
         delete[] board[i];
     }
     delete[] board;
+    for (int i = 0; i < N; i++) {
+        if (child[i]) {
+            child[i]->clearArray();
+        }
+    }
     delete[] child;
+    canMove.clear();
+}
+
+Node::~Node() {
+    clearArray();
 }

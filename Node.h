@@ -43,6 +43,7 @@ public:
     int** getBoard();
     Point getMove();
     Node* expand();
+    void clearArray();
     ~Node();
 
     friend class UCT;
