@@ -9,7 +9,7 @@
 #define POINT_H_
 
 class Point {
-   public:
+public:
     int x;
     int y;
 
