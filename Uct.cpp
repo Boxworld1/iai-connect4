@@ -120,22 +120,22 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     if (_x < 0 || _y < 0) return 5;
     if (player && userWin(_x, _y, M, N, _board)) {
         for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            std::cerr << _board[i][j] << " ";
+            for (int j = 0; j < N; j++) {
+                std::cerr << _board[i][j] << " ";
+            }
+            std::cerr << "\n";
         }
         std::cerr << "\n";
-    }
-    std::cerr << "\n";
         return -1;
     }
     if (!player && machineWin(_x, _y, M, N, _board)) {
         for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            std::cerr << _board[i][j] << " ";
+            for (int j = 0; j < N; j++) {
+                std::cerr << _board[i][j] << " ";
+            }
+            std::cerr << "\n";
         }
         std::cerr << "\n";
-    }
-    std::cerr << "\n";
         return 1;
     }
     if (isTie(N, top)) return 0;
