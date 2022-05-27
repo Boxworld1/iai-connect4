@@ -28,7 +28,6 @@ UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* 
             board[i][j] = _board[i][j];
         }
     }
-
     // std::cerr << "[UCT::UCT] init finished\n";
 
 }
@@ -57,7 +56,7 @@ void UCT::boardReset() {
 
 Point UCT::uctSearch() {
     std::cerr << "[UCT::uctSearch] search started\n";
-
+    boardReset();
     root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     while (timer.get() < TIME_LIMIT) {
         // std::cerr << "[UCT::uctSearch] check next node\n";
