@@ -119,7 +119,7 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < N; j++) {
-            std::cerr << board[i][j] << " ";
+            std::cerr << _board[i][j] << " ";
         }
         std::cerr << "\n";
     }
