@@ -63,8 +63,9 @@ bool Node::canExpend() {
 Node* Node::expand() {
     std::cerr << "Node expand\n";
     // 随机选择要下的列
-    srand(timer.get());
+    srand((unsigned int)timer.get());
     int idx = rand() % countCanMove;
+    std::cerr << "target idx: " << idx << "\n";
     
     // 复制当前信息
     int* tmpTop = new int[N];
