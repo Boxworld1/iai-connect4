@@ -110,7 +110,7 @@ int UCT::defaultPolicy(Node* v) {
     delete[] tmpTop;
     for (int i = 0; i < M; i++) delete[] tmpBoard[i];
     delete[] tmpBoard;
-    
+
     return score;
 }
 
@@ -131,4 +131,10 @@ void UCT::backup(Node* v, int status) {
         status = 1 - status;
         v = v->parent;
     }
+}
+
+UCT::~UCT() {
+    delete[] top;
+    for (int i = 0; i < M; i++) delete board[i];
+    delete[] board;
 }

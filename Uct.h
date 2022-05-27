@@ -26,6 +26,7 @@ public:
     int defaultPolicy(Node* v);
     void backup(Node* v, int status);
     int getScore(int _x, int _y, int* _top, int** _board, bool player);
+    ~UCT();
 };
 
 #endif
