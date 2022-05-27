@@ -130,6 +130,7 @@ bool Node::end() {
             }
             std::cerr << "\n";
         }
+        std::cerr << "\n";
         return true;
     }
     // std::cerr << "[Node::end] status: game continue\n";
