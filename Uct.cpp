@@ -98,7 +98,7 @@ int UCT::defaultPolicy(Node* v) {
         tmpTop[idx]--;
         int x = tmpTop[idx], y = idx;
         tmpBoard[x][y] = (player? 1: 2);
-        std::cerr << x << " " << y << ": " << tmpBoard[x][y] << "\n";
+        // std::cerr << x << " " << y << ": " << tmpBoard[x][y] << "\n";
 
         // 若下棋位置的再下一位是不可下棋点, 则跳过
         if (x - 1 == noX && y == noY) {
@@ -119,23 +119,23 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
     if (_x < 0 || _y < 0) return 5;
     if (player && userWin(_x, _y, M, N, _board)) {
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) {
-                std::cerr << _board[i][j] << " ";
-            }
-            std::cerr << "\n";
-        }
-        std::cerr << "\n";
+        // for (int i = 0; i < M; i++) {
+        //     for (int j = 0; j < N; j++) {
+        //         std::cerr << _board[i][j] << " ";
+        //     }
+        //     std::cerr << "\n";
+        // }
+        // std::cerr << "\n";
         return -1;
     }
     if (!player && machineWin(_x, _y, M, N, _board)) {
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) {
-                std::cerr << _board[i][j] << " ";
-            }
-            std::cerr << "\n";
-        }
-        std::cerr << "\n";
+        // for (int i = 0; i < M; i++) {
+        //     for (int j = 0; j < N; j++) {
+        //         std::cerr << _board[i][j] << " ";
+        //     }
+        //     std::cerr << "\n";
+        // }
+        // std::cerr << "\n";
         return 1;
     }
     if (isTie(N, top)) return 0;
