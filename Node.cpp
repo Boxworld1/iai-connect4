@@ -99,8 +99,9 @@ Node* Node::expand() {
     // 记录此状态
     Node* tmp = new Node(this, M, N, noX, noY, nxtX, nxtY, tmpTop, tmpBoard, !player);
     canMove.erase(canMove.begin() + idx);
-    child[nxtY] = tmp;
+    std::cerr << "Node erase idx finished: " << idx << "\n";
 
+    child[nxtY] = tmp;
     std::cerr << "Node expend finished\n";
 
     return tmp;
