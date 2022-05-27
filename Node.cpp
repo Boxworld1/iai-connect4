@@ -87,7 +87,7 @@ Node* Node::expand() {
     int nxtY = canMove[idx];
     tmpTop[nxtY]--;
     int nxtX = tmpTop[nxtY];
-    tmpBoard[nxtX][nxtY] = (player? 1: 2);
+    tmpBoard[nxtX][nxtY] = ((!player)? 1: 2);
 
     // std::cerr << "[Node::expand] Node move " << nxtX << " " << nxtY << " " << tmpBoard[nxtX][nxtY] << "\n";
 

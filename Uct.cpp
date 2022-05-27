@@ -31,7 +31,7 @@ UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* 
 
 Point UCT::uctSearch() {
     // std::cerr << "[UCT::uctSearch] search started\n";
-    root = new Node(nullptr, M, N, noX, noY, lastX, lastY, top, board, false);
+    root = new Node(nullptr, M, N, noX, noY, lastX, lastY, top, board, true);
     while (timer.get() < TIME_LIMIT) {
         // std::cerr << "[UCT::uctSearch] check next node\n";
         // std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
@@ -79,7 +79,7 @@ int UCT::defaultPolicy(Node* v) {
 
     // std::cerr << "[UCT::defaultPolicy] copy finished\n";
 
-    bool player = !(v->getPlayer());
+    bool player = v->getPlayer();
     int score = getScore(x, y, tmpTop, tmpBoard, player);
 
     // std::cerr << "[UCT::defaultPolicy] simulation\n";
