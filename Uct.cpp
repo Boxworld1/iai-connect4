@@ -144,14 +144,14 @@ int UCT::defaultPolicy(Node* v) {
 int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
 
-    // std::cerr << _x << " " << _y << ": " << 3 - int(player) << "\n";
-    // for (int i = 0; i < M; i++) {
-    //     for (int j = 0; j < N; j++) {
-    //         std::cerr << _board[i][j] << " ";
-    //     }
-    //     std::cerr << "\n";
-    // }
-    // std::cerr << "\n";
+    std::cerr << _x << " " << _y << ": " << 3 - int(player) << "\n";
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < N; j++) {
+            std::cerr << _board[i][j] << " ";
+        }
+        std::cerr << "\n";
+    }
+    std::cerr << "\n";
     if (_x < 0 || _y < 0) return 5;
     if (player && userWin(_x, _y, M, N, _board)) {
         // for (int i = 0; i < M; i++) {
