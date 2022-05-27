@@ -63,7 +63,7 @@ bool Node::canExpend() {
 Node* Node::expand() {
     std::cerr << "Node expand\n";
     // 随机选择要下的列
-    srand((unsigned int)timer.get());
+    srand(timer.get());
     int idx = rand() % countCanMove;
     std::cerr << "target idx: " << idx << "\n";
     
@@ -74,7 +74,7 @@ Node* Node::expand() {
     }
 
     int** tmpBoard = new int*[M];
-    for (int i = 0; i < M * N; i++) {
+    for (int i = 0; i < M; i++) {
         tmpBoard[i] = new int[N];
         for (int j = 0; j < N; j++) {
             tmpBoard[i][j] = board[i][j];
