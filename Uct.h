@@ -20,6 +20,9 @@ class UCT {
     // 外部信息
     Timer timer;
     Node* root;
+
+    static int* curTop;
+    static int** curBoard;
 public:
     UCT();
     UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* _top, int** _board);

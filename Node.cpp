@@ -1,10 +1,11 @@
 #include "Node.h"
+#include "Uct.h"
 
 Node::Node() {
     timer.set();
 }
 
-Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, int* _top, int** _board, bool _player): 
+Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, bool _player): 
     parent(_parent), M(_M), N(_N), noX(_noX), noY(_noY), posX(_posX), posY(_posY), player(_player) {
     
     // std::cerr << "[Node::Node] init\n";
@@ -15,22 +16,11 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
     countWin = 0;
     timer.set();
 
-    // 记录每一列的可下子位置
-    top = new int[N];
+    // 记录可下子的列编号
     for (int i = 0; i < N; i++) {
-        top[i] = _top[i];
-        if (top[i]) {
+        if (UCT::curTop[i]) {
             countCanMove++;
             canMove.push_back(i);
-        }
-    }
-
-    // 记录当前棋盘信息
-    board = new int*[M];
-    for (int i = 0; i < M; i++) {
-        board[i] = new int[N];
-        for (int j = 0; j < N; j++) {
-            board[i][j] = _board[i][j];
         }
     }
 
@@ -65,50 +55,24 @@ Node* Node::expand() {
     // 随机选择要下的列
     srand(timer.get());
     int idx = rand() % countCanMove;
-    // std::cerr << "[Node::expand] target idx: " << idx << "\n";
-    
-    // 复制当前信息
-    int* tmpTop = new int[N];
-    for (int i = 0; i < N; i++) {
-        tmpTop[i] = top[i];
-    }
-
-    int** tmpBoard = new int*[M];
-    for (int i = 0; i < M; i++) {
-        tmpBoard[i] = new int[N];
-        for (int j = 0; j < N; j++) {
-            tmpBoard[i][j] = board[i][j];
-        }
-    }
-    
-    // std::cerr << "[Node::expand] copy info finished\n";
 
     // 对应位置下棋
     int nxtY = canMove[idx];
-    tmpTop[nxtY]--;
-    int nxtX = tmpTop[nxtY];
-    tmpBoard[nxtX][nxtY] = ((!player)? 1: 2);
-
-    // std::cerr << "[Node::expand] Node move " << nxtX << " " << nxtY << " " << tmpBoard[nxtX][nxtY] << "\n";
+    int nxtX = --UCT::curTop[nxtY];
+    UCT::curBoard[nxtX][nxtY] = ((!player)? 1: 2);
 
     // 若下棋位置的再下一位是不可下棋点, 则跳过
     if (nxtX - 1 == noX && nxtY == noY) {
-        tmpTop[nxtY]--;
+        UCT::curTop[nxtY]--;
     }
 
     // 记录此状态
-    Node* tmp = new Node(this, M, N, noX, noY, nxtX, nxtY, tmpTop, tmpBoard, !player);
-    // std::cerr << "[Node::expand] canMove size: " << canMove.size() << "\n";
+    Node* tmp = new Node(this, M, N, noX, noY, nxtX, nxtY, !player);
     canMove.erase(canMove.begin() + idx);
     countCanMove--;
-    // std::cerr << "[Node::expand] erase idx finished: " << idx << "\n";
-
     child[nxtY] = tmp;
-    // std::cerr << "[Node::expand] Node expend finished\n";
-    delete[] tmpTop;
-    for (int i = 0; i < M; i++) delete[] tmpBoard[i];
-    delete[] tmpBoard;
 
+    // std::cerr << "[Node::expand] Node expend finished\n";
     return tmp;
 }
 
@@ -120,9 +84,9 @@ bool Node::end() {
     }
 
     // 否则若到达游戏终止条件
-    if ((player && userWin(posX, posY, M, N, board)) ||
-        (!player && machineWin(posX, posY, M, N, board)) ||
-        (isTie(N, top))) {
+    if ((player && userWin(posX, posY, M, N, UCT::curBoard)) ||
+        (!player && machineWin(posX, posY, M, N, UCT::curBoard)) ||
+        (isTie(N, UCT::curTop))) {
         return true;
     }
     // std::cerr << "[Node::end] status: game continue\n";
@@ -137,20 +101,7 @@ Point Node::getMove() {
     return Point(posX, posY);
 }
 
-int* Node::getTop() {
-    return top;
-}
-
-int** Node::getBoard() {
-    return board;
-}
-
 void Node::clearArray() {
-    delete[] top;
-    for (int i = 0; i < M; i++) {
-        delete[] board[i];
-    }
-    delete[] board;
     for (int i = 0; i < N; i++) {
         if (child[i]) {
             child[i]->clearArray();

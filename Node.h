@@ -12,8 +12,6 @@ class Node {
     // 原始信息
     int M, N;
     int noX, noY;
-    int *top;
-    int **board;
 
     // UCB1
     int countVisited;
@@ -34,13 +32,11 @@ class Node {
 
 public:
     Node();
-    Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, int* _top, int** _board, bool _player);
+    Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, bool _player);
     Node* bestChild();
     bool canExpend();
     bool end();
     bool getPlayer();
-    int* getTop();
-    int** getBoard();
     Point getMove();
     Node* expand();
     void clearArray();

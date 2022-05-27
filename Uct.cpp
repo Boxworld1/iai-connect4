@@ -1,7 +1,8 @@
 #include "Uct.h"
 
-int *curTop;
-int **curBoard;
+// 全局变量初始化
+int *UCT::curTop = nullptr;
+int **UCT::curBoard = nullptr;
 
 UCT::UCT() {}
 
@@ -56,16 +57,18 @@ void UCT::boardReset() {
 
 Point UCT::uctSearch() {
     // std::cerr << "[UCT::uctSearch] search started\n";
-    boardReset();
 
-    root = new Node(nullptr, M, N, noX, noY, lastX, lastY, top, board, true);
+    root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     while (timer.get() < TIME_LIMIT) {
         // std::cerr << "[UCT::uctSearch] check next node\n";
         // std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
+        boardReset();
         Node* vl = treePolicy(root);
         int delta = defaultPolicy(vl);
         backup(vl, delta);
+        boardClear();
     }
+
     return root->bestChild()->getMove();
 }
 
@@ -88,19 +91,16 @@ int UCT::defaultPolicy(Node* v) {
     int x = pt.x;
     int y = pt.y;
 
-    int* _top = v->getTop();
-    int** _board = v->getBoard();
-
     int* tmpTop = new int[N];
     for (int i = 0; i < N; i++) {
-        tmpTop[i] = _top[i];
+        tmpTop[i] = curTop[i];
     }
 
     int** tmpBoard = new int*[M];
     for (int i = 0; i < M; i++) {
         tmpBoard[i] = new int[N];
         for (int j = 0; j < N; j++) {
-            tmpBoard[i][j] = _board[i][j];
+            tmpBoard[i][j] = curBoard[i][j];
         }
     }
 
