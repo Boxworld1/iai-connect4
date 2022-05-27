@@ -1,5 +1,8 @@
 #include "Uct.h"
 
+int *curTop;
+int **curBoard;
+
 UCT::UCT() {}
 
 UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* _top, int** _board):
@@ -29,8 +32,32 @@ UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* 
 
 }
 
+void UCT::boardClear() {
+    delete[] curTop;
+    for (int i = 0; i < M; i++) delete[] curBoard[i];
+    delete[] curBoard;
+}
+
+void UCT::boardReset() {
+    curTop = new int[N];
+    for (int i = 0; i < N; i++) {
+        curTop[i] = top[i];
+    }
+
+    // 记录当前棋盘信息
+    curBoard = new int*[M];
+    for (int i = 0; i < M; i++) {
+        curBoard[i] = new int[N];
+        for (int j = 0; j < N; j++) {
+            curBoard[i][j] = board[i][j];
+        }
+    }
+}
+
 Point UCT::uctSearch() {
     // std::cerr << "[UCT::uctSearch] search started\n";
+    boardReset();
+
     root = new Node(nullptr, M, N, noX, noY, lastX, lastY, top, board, true);
     while (timer.get() < TIME_LIMIT) {
         // std::cerr << "[UCT::uctSearch] check next node\n";
