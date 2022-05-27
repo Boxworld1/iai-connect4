@@ -123,14 +123,6 @@ bool Node::end() {
     if ((player && userWin(posX, posY, M, N, board)) ||
         (!player && machineWin(posX, posY, M, N, board)) ||
         (isTie(N, top))) {
-        // std::cerr << "[Node::end] status: game end\n";
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) {
-                std::cerr << board[i][j] << " ";
-            }
-            std::cerr << "\n";
-        }
-        std::cerr << "\n";
         return true;
     }
     // std::cerr << "[Node::end] status: game continue\n";

@@ -34,7 +34,7 @@ Point UCT::uctSearch() {
     root = new Node(nullptr, M, N, noX, noY, -1, -1, top, board, false);
     while (timer.get() < TIME_LIMIT) {
         // std::cerr << "[UCT::uctSearch] check next node\n";
-        // std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
+        std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
         Node* vl = treePolicy(root);
         int delta = defaultPolicy(vl);
         backup(vl, delta);
