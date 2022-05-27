@@ -7,7 +7,7 @@ Node::Node() {
 Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, int* _top, int** _board, bool _player): 
     parent(_parent), M(_M), N(_N), noX(_noX), noY(_noY), posX(_posX), posY(_posY), player(_player) {
     
-    std::cerr << "[Node::Node] init\n";
+    // std::cerr << "[Node::Node] init\n";
     // 初始化
     canMove.clear();
     countCanMove = 0;
@@ -36,11 +36,11 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
 
     // 记录子节点
     child = new Node*[N];
-    std::cerr << "[Node::Node] init finished\n";
+    // std::cerr << "[Node::Node] init finished\n";
 }
 
 Node* Node::bestChild() {
-    std::cerr << "[Node::bestChild]\n";
+    // std::cerr << "[Node::bestChild]\n";
     double tmpScore = -1e20;
     Node* tmpNode = nullptr;
     for (int i = 0; i < N; i++) {
@@ -61,11 +61,11 @@ bool Node::canExpend() {
 }
 
 Node* Node::expand() {
-    std::cerr << "[Node::expand]\n";
+    // std::cerr << "[Node::expand]\n";
     // 随机选择要下的列
     srand(timer.get());
     int idx = rand() % countCanMove;
-    std::cerr << "[Node::expand] target idx: " << idx << "\n";
+    // std::cerr << "[Node::expand] target idx: " << idx << "\n";
     
     // 复制当前信息
     int* tmpTop = new int[N];
@@ -81,7 +81,7 @@ Node* Node::expand() {
         }
     }
     
-    std::cerr << "[Node::expand] copy info finished\n";
+    // std::cerr << "[Node::expand] copy info finished\n";
 
     // 对应位置下棋
     int nxtY = canMove[idx];
@@ -89,7 +89,7 @@ Node* Node::expand() {
     int nxtX = top[nxtY];
     tmpBoard[nxtX][nxtY] = (player? 1: 2);
 
-    std::cerr << "[Node::expand] Node move " << nxtX << " " << nxtY << " " << tmpBoard[nxtX][nxtY] << "\n";
+    // std::cerr << "[Node::expand] Node move " << nxtX << " " << nxtY << " " << tmpBoard[nxtX][nxtY] << "\n";
 
     // 若下棋位置的再下一位是不可下棋点, 则跳过
     if (nxtX - 1 == noX && nxtY == noY) {
@@ -98,19 +98,19 @@ Node* Node::expand() {
 
     // 记录此状态
     Node* tmp = new Node(this, M, N, noX, noY, nxtX, nxtY, tmpTop, tmpBoard, !player);
-    std::cerr << "[Node::expand] canMove size: " << canMove.size() << "\n";
+    // std::cerr << "[Node::expand] canMove size: " << canMove.size() << "\n";
     canMove.erase(canMove.begin() + idx);
     countCanMove--;
-    std::cerr << "[Node::expand] erase idx finished: " << idx << "\n";
+    // std::cerr << "[Node::expand] erase idx finished: " << idx << "\n";
 
     child[nxtY] = tmp;
-    std::cerr << "[Node::expand] Node expend finished\n";
+    // std::cerr << "[Node::expand] Node expend finished\n";
 
     return tmp;
 }
 
 bool Node::end() {
-    std::cerr << "[Node::end] Node status check\n";
+    // std::cerr << "[Node::end] Node status check\n";
     // 若尚未下棋
     if (posX == -1 && posY == -1) {
         return false;
@@ -120,10 +120,10 @@ bool Node::end() {
     if ((player && userWin(posX, posY, M, N, board)) ||
         (!player && machineWin(posX, posY, M, N, board)) ||
         (isTie(N, top))) {
-        std::cerr << "[Node::end] status: game end\n";
+        // std::cerr << "[Node::end] status: game end\n";
         return true;
     }
-    std::cerr << "[Node::end] status: game continue\n";
+    // std::cerr << "[Node::end] status: game continue\n";
     return false;
 }
 
