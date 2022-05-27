@@ -117,8 +117,26 @@ int UCT::defaultPolicy(Node* v) {
 int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
     if (_x < 0 || _y < 0) return 5;
-    if (player && userWin(_x, _y, M, N, _board)) return -1;
-    if (!player && machineWin(_x, _y, M, N, _board)) return 1;
+    if (player && userWin(_x, _y, M, N, _board)) {
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                std::cerr << board[i][j] << " ";
+            }
+            std::cerr << "\n";
+        }
+        std::cerr << "\n";
+        return -1;
+    }
+    if (!player && machineWin(_x, _y, M, N, _board)) {
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                std::cerr << board[i][j] << " ";
+            }
+            std::cerr << "\n";
+        }
+        std::cerr << "\n";
+        return 1;
+    }
     if (isTie(N, top)) return 0;
     return 10;
 }
