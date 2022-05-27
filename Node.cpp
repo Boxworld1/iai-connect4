@@ -8,7 +8,7 @@ Node::Node() {
 Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, bool _player): 
     parent(_parent), M(_M), N(_N), noX(_noX), noY(_noY), posX(_posX), posY(_posY), player(_player) {
     
-    // std::cerr << "[Node::Node] init\n";
+    std::cerr << "[Node::Node] init\n";
     // 初始化
     canMove.clear();
     countCanMove = 0;
@@ -30,7 +30,7 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
 }
 
 Node* Node::bestChild() {
-    // std::cerr << "[Node::bestChild]\n";
+    std::cerr << "[Node::bestChild]\n";
     double tmpScore = -1e20;
     Node* tmpNode = nullptr;
     for (int i = 0; i < N; i++) {
@@ -51,7 +51,7 @@ bool Node::canExpend() {
 }
 
 Node* Node::expand() {
-    // std::cerr << "[Node::expand]\n";
+    std::cerr << "[Node::expand]\n";
     // 随机选择要下的列
     srand(timer.get());
     int idx = rand() % countCanMove;
@@ -77,7 +77,7 @@ Node* Node::expand() {
 }
 
 bool Node::end() {
-    // std::cerr << "[Node::end] Node status check\n";
+    std::cerr << "[Node::end] Node status check\n";
     // 若尚未下棋
     if (posX == -1 && posY == -1) {
         return false;
