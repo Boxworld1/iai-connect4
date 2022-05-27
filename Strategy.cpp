@@ -46,13 +46,17 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
     // Add your own code below
 
     // a naive example
-    for (int i = N - 1; i >= 0; i--) {
-        if (top[i] > 0) {
-            x = top[i] - 1;
-            y = i;
-            break;
-        }
-    }
+    // for (int i = N - 1; i >= 0; i--) {
+    //     if (top[i] > 0) {
+    //         x = top[i] - 1;
+    //         y = i;
+    //         break;
+    //     }
+    // }
+    UCT myuct = UCT(M, N, noX, noY, top, board);
+    Point tar = myuct.uctSearch();
+    x = tar.x;
+    y = tar.y;
 
     /*
             不要更改这段代码

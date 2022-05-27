@@ -19,7 +19,7 @@ class UCT {
     Node* root;
 public:
     UCT();
-    UCT(int _M, int _N, int _noX, int _noY, int* _top, int** _board);
+    UCT(int _M, int _N, int _noX, int _noY, const int* _top, int** _board);
     Point uctSearch();
     Node* treePolicy(Node* v);
     int defaultPolicy(Node* v);

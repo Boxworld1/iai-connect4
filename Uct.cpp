@@ -2,7 +2,7 @@
 
 UCT::UCT() {}
 
-UCT::UCT(int _M, int _N, int _noX, int _noY, int* _top, int** _board):
+UCT::UCT(int _M, int _N, int _noX, int _noY, const int* _top, int** _board):
     M(_M), N(_N), noX(_noX), noY(_noY) {
 
     // 初始化
