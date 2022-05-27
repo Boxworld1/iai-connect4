@@ -4,6 +4,7 @@
 #include "Node.h"
 #include "Timer.h"
 #include "Point.h"
+#include <iostream>
 
 #define TIME_LIMIT 2000000
 

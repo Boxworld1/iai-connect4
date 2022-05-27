@@ -5,6 +5,7 @@ UCT::UCT() {}
 UCT::UCT(int _M, int _N, int _noX, int _noY, const int* _top, int** _board):
     M(_M), N(_N), noX(_noX), noY(_noY) {
 
+    std::cerr << "UCT init\n";
     // 初始化
     root = nullptr;
     timer.set();
@@ -24,11 +25,15 @@ UCT::UCT(int _M, int _N, int _noX, int _noY, const int* _top, int** _board):
         }
     }
 
+    std::cerr << "UCT init finished\n";
+
 }
 
 Point UCT::uctSearch() {
+    std::cerr << "UCT search started\n";
     root = new Node(nullptr, M, N, noX, noY, -1, -1, top, board, true);
     while (timer.get() < TIME_LIMIT) {
+        std::cerr << "UCT check next node\n";
         Node* vl = treePolicy(root);
         int delta = defaultPolicy(vl);
         backup(vl, delta);
@@ -37,6 +42,7 @@ Point UCT::uctSearch() {
 }
 
 Node* UCT::treePolicy(Node* v) {
+    std::cerr << "UCT treePolicy\n";
     while (!v->end()) {
         if (v->canExpend()) {
             return v->expand();
@@ -48,6 +54,7 @@ Node* UCT::treePolicy(Node* v) {
 }
 
 int UCT::defaultPolicy(Node* v) {
+    std::cerr << "UCT treePolicy\n";
     Point pt = v->getMove();
 
     int x = pt.x;
@@ -72,6 +79,7 @@ int UCT::defaultPolicy(Node* v) {
     bool player = v->getPlayer();
     int score = getScore(x, y, tmpTop, tmpBoard, player);
 
+    std::cerr << "UCT simunation\n";
     while (score > 1) {
         // 回合切换
         player = !player;
@@ -99,6 +107,7 @@ int UCT::defaultPolicy(Node* v) {
 }
 
 int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
+    std::cerr << "UCT getScore\n";
     if (_x < 0 || _y < 0) return 5;
     if (player && userWin(_x, _y, M, N, _board)) return -1;
     if (!player && machineWin(_x, _y, M, N, _board)) return 1;
@@ -107,6 +116,7 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
 }
 
 void UCT::backup(Node* v, int status) {
+    std::cerr << "UCT backup\n";
     while (v) {
         v->countVisited ++;
         v->countWin += status;
