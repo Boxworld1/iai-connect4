@@ -107,9 +107,7 @@ Node* Node::expand() {
 }
 
 bool Node::end() {
-
-    std::cerr << "Node check end\n";
-
+    std::cerr << "Node status check\n";
     // 若尚未下棋
     if (posX == -1 && posY == -1) {
         return false;
@@ -119,6 +117,7 @@ bool Node::end() {
     if ((player && userWin(posX, posY, M, N, board)) ||
         (!player && machineWin(posX, posY, M, N, board)) ||
         (isTie(N, top))) {
+        std::cerr << "Node status: game end\n";
         return true;
     }
 

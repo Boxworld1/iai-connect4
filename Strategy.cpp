@@ -57,6 +57,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
     Point tar = myuct.uctSearch();
     x = tar.x;
     y = tar.y;
+    std::cerr << x << " " << y << "\n";
 
     /*
             不要更改这段代码

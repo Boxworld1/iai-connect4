@@ -8,6 +8,7 @@
 #ifndef STRATEGY_H_
 #define STRATEGY_H_
 
+#include <iostream>
 #include "Point.h"
 #include "Uct.h"
 

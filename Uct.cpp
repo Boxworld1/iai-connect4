@@ -54,7 +54,7 @@ Node* UCT::treePolicy(Node* v) {
 }
 
 int UCT::defaultPolicy(Node* v) {
-    std::cerr << "UCT treePolicy\n";
+    std::cerr << "UCT defaultPolicy\n";
     Point pt = v->getMove();
 
     int x = pt.x;
@@ -67,7 +67,7 @@ int UCT::defaultPolicy(Node* v) {
     for (int i = 0; i < N; i++) {
         tmpTop[i] = _top[i];
     }
-    
+
     int** tmpBoard = new int*[M];
     for (int i = 0; i < M; i++) {
         tmpBoard[i] = new int[N];
@@ -76,10 +76,12 @@ int UCT::defaultPolicy(Node* v) {
         }
     }
 
+    std::cerr << "UCT copy finished\n";
+
     bool player = v->getPlayer();
     int score = getScore(x, y, tmpTop, tmpBoard, player);
 
-    std::cerr << "UCT simunation\n";
+    std::cerr << "UCT simulation\n";
     while (score > 1) {
         // 回合切换
         player = !player;
