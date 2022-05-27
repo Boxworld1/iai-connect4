@@ -118,6 +118,7 @@ int UCT::defaultPolicy(Node* v) {
 int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
 
+    std::cerr << _x << " " << _y << ": " << int(player) + 1 << "\n";
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < N; j++) {
             std::cerr << _board[i][j] << " ";
