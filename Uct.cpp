@@ -5,7 +5,7 @@ UCT::UCT() {}
 UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* _top, int** _board):
     M(_M), N(_N), noX(_noX), noY(_noY), lastX(_lastX), lastY(_lastY) {
 
-    std::cerr << "[UCT::UCT] init\n";
+    // std::cerr << "[UCT::UCT] init\n";
     // 初始化
     root = nullptr;
     timer.set();
@@ -118,14 +118,14 @@ int UCT::defaultPolicy(Node* v) {
 int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
 
-    std::cerr << _x << " " << _y << ": " << int(player) + 1 << "\n";
-    for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            std::cerr << _board[i][j] << " ";
-        }
-        std::cerr << "\n";
-    }
-    std::cerr << "\n";
+    // std::cerr << _x << " " << _y << ": " << 3 - int(player) << "\n";
+    // for (int i = 0; i < M; i++) {
+    //     for (int j = 0; j < N; j++) {
+    //         std::cerr << _board[i][j] << " ";
+    //     }
+    //     std::cerr << "\n";
+    // }
+    // std::cerr << "\n";
     if (_x < 0 || _y < 0) return 5;
     if (player && userWin(_x, _y, M, N, _board)) {
         // for (int i = 0; i < M; i++) {
@@ -135,7 +135,7 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
         //     std::cerr << "\n";
         // }
         // std::cerr << "\n";
-        std::cerr << "Score: -1\n";
+        // std::cerr << "Score: -1\n";
         return -1;
     }
     if (!player && machineWin(_x, _y, M, N, _board)) {
@@ -147,7 +147,7 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
         // }
         // std::cerr << "\n";
 
-        std::cerr << "Score: 1\n";
+        // std::cerr << "Score: 1\n";
         return 1;
     }
     if (isTie(N, top)) return 0;
