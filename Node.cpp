@@ -105,6 +105,9 @@ Node* Node::expand() {
 
     child[nxtY] = tmp;
     // std::cerr << "[Node::expand] Node expend finished\n";
+    delete[] tmpTop;
+    for (int i = 0; i < M; i++) delete[] tmpBoard[i];
+    delete[] tmpBoard;
 
     return tmp;
 }

@@ -106,6 +106,11 @@ int UCT::defaultPolicy(Node* v) {
 
         score = getScore(pt.x, pt.y, tmpTop, tmpBoard, player);
     }
+
+    delete[] tmpTop;
+    for (int i = 0; i < M; i++) delete[] tmpBoard[i];
+    delete[] tmpBoard;
+    
     return score;
 }
 
