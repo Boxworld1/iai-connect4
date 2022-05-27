@@ -33,6 +33,7 @@ Node* Node::bestChild() {
     // std::cerr << "[Node::bestChild]\n";
     double tmpScore = -1e20;
     Node* tmpNode = nullptr;
+    // 遍历所有列
     for (int i = 0; i < N; i++) {
         if (child[i] == nullptr) continue;
         int win = child[i]->countWin;
@@ -102,6 +103,7 @@ Point Node::getMove() {
 }
 
 void Node::clearArray() {
+    // 清除子节点
     for (int i = 0; i < N; i++) {
         if (child[i]) {
             child[i]->clearArray();

@@ -83,7 +83,7 @@ Node* UCT::treePolicy(Node* v) {
     return v;
 }
 
-int UCT::defaultPolicy(Node* v) {
+double UCT::defaultPolicy(Node* v) {
     // std::cerr << "[UCT::defaultPolicy]\n";
     Point pt = v->getMove();
 
@@ -180,7 +180,7 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     return 10;
 }
 
-void UCT::backup(Node* v, int status) {
+void UCT::backup(Node* v, double status) {
     // std::cerr << "[UCT::backup]\n";
     while (v) {
         v->countVisited ++;

@@ -30,8 +30,8 @@ public:
     void boardReset();
     Point uctSearch();
     Node* treePolicy(Node* v);
-    int defaultPolicy(Node* v);
-    void backup(Node* v, int status);
+    double defaultPolicy(Node* v);
+    void backup(Node* v, double status);
     int getScore(int _x, int _y, int* _top, int** _board, bool player);
     ~UCT();
 
