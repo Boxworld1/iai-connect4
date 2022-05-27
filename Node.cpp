@@ -85,15 +85,15 @@ Node* Node::expand() {
 
     // 对应位置下棋
     int nxtY = canMove[idx];
-    top[nxtY]--;
-    int nxtX = top[nxtY];
+    tmpTop[nxtY]--;
+    int nxtX = tmpTop[nxtY];
     tmpBoard[nxtX][nxtY] = (player? 1: 2);
 
     // std::cerr << "[Node::expand] Node move " << nxtX << " " << nxtY << " " << tmpBoard[nxtX][nxtY] << "\n";
 
     // 若下棋位置的再下一位是不可下棋点, 则跳过
     if (nxtX - 1 == noX && nxtY == noY) {
-        top[nxtY]--;
+        tmpTop[nxtY]--;
     }
 
     // 记录此状态

@@ -90,18 +90,18 @@ int UCT::defaultPolicy(Node* v) {
         // 找出下子点
         srand(timer.get());
         int idx = rand() % N;
-        while (!top[idx]) {
+        while (!tmpTop[idx]) {
             idx = rand() % N;
         }
 
         // 下棋
-        top[idx]--;
-        int x = top[idx], y = idx;
+        tmpTop[idx]--;
+        int x = tmpTop[idx], y = idx;
         tmpBoard[x][y] = (player? 1: 2);
 
         // 若下棋位置的再下一位是不可下棋点, 则跳过
         if (x - 1 == noX && y == noY) {
-            top[y]--;
+            tmpTop[y]--;
         }
 
         score = getScore(pt.x, pt.y, tmpTop, tmpBoard, player);
