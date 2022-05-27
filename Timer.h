@@ -16,7 +16,7 @@ public:
 
     long long get() {
         ed = std::chrono::high_resolution_clock::now();
-        auto duration = (ed - st) / 1000;
+        auto duration = ed - st;
         return duration.count();
     }
 };
