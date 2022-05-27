@@ -18,6 +18,7 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
 
     // 记录可下子的列编号
     for (int i = 0; i < N; i++) {
+        std::cerr << UCT::curTop[i] << "\n";
         if (UCT::curTop[i]) {
             countCanMove++;
             canMove.push_back(i);
