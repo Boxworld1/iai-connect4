@@ -9,7 +9,7 @@ UCT::UCT() {}
 UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* _top, int** _board):
     M(_M), N(_N), noX(_noX), noY(_noY), lastX(_lastX), lastY(_lastY) {
 
-    std::cerr << "[UCT::UCT] init\n";
+    // std::cerr << "[UCT::UCT] init\n";
     // 初始化
     root = nullptr;
     timer.set();
@@ -55,12 +55,12 @@ void UCT::boardReset() {
 }
 
 Point UCT::uctSearch() {
-    std::cerr << "[UCT::uctSearch] search started\n";
+    // std::cerr << "[UCT::uctSearch] search started\n";
     boardReset();
     root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     while (timer.get() < TIME_LIMIT) {
         // std::cerr << "[UCT::uctSearch] check next node\n";
-        std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
+        // std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
         boardReset();
         Node* vl = treePolicy(root);
         int delta = defaultPolicy(vl);
@@ -72,7 +72,7 @@ Point UCT::uctSearch() {
 }
 
 Node* UCT::treePolicy(Node* v) {
-    std::cerr << "[UCT::treePolicy]\n";
+    // std::cerr << "[UCT::treePolicy]\n";
     while (!v->end()) {
         if (v->canExpend()) {
             return v->expand();
@@ -84,7 +84,7 @@ Node* UCT::treePolicy(Node* v) {
 }
 
 int UCT::defaultPolicy(Node* v) {
-    std::cerr << "[UCT::defaultPolicy]\n";
+    // std::cerr << "[UCT::defaultPolicy]\n";
     Point pt = v->getMove();
 
     int x = pt.x;
