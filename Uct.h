@@ -6,7 +6,7 @@
 #include "Point.h"
 #include <iostream>
 
-#define TIME_LIMIT 20000000
+#define TIME_LIMIT 2000000
 
 class UCT {
     // 原始信息
