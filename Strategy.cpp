@@ -53,7 +53,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
     //         break;
     //     }
     // }
-    UCT myuct = UCT(M, N, noX, noY, top, board);
+    UCT myuct = UCT(M, N, noX, noY, lastX, lastY, top, board);
     Point tar = myuct.uctSearch();
     x = tar.x;
     y = tar.y;
