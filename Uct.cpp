@@ -105,7 +105,7 @@ int UCT::defaultPolicy(Node* v) {
             tmpTop[y]--;
         }
 
-        score = getScore(pt.x, pt.y, tmpTop, tmpBoard, player);
+        score = getScore(x, y, tmpTop, tmpBoard, player);
     }
 
     delete[] tmpTop;
