@@ -105,7 +105,9 @@ void UCT::updateRoot(Node* v, int x, int y) {
         }
     }
     root = newRoot;
-    std::cerr << "[New Root] " << root->posX << " " << root->posY << "\n";
+    if (root) {
+        std::cerr << "[New Root] " << root->posX << " " << root->posY << "\n";
+    }
 }
 
 Point UCT::uctSearch() {
