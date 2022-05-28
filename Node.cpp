@@ -41,7 +41,6 @@ Node* Node::bestChild() {
         if (child[i] == nullptr) continue;
         int win = child[i]->countWin;
         int vis = child[i]->countVisited;
-        if (vis > 25) std::cerr << i << " " << win << " " << vis << "\n";
         double score = (win * 1.0 / vis + c * sqrt(2.0 * log(countVisited) / vis));
         if (score > tmpScore) {
             tmpScore = score;
