@@ -89,6 +89,7 @@ void UCT::boardPrint(int** _board) {
 }
 
 void UCT::removeNode(Node* v, int x, int y) {
+    std::cerr << "[UCT::removeNode] " << x << ", " << y << "\n";
     if (!v) return;
     Node* newRoot = nullptr;
     for (int i = 0; i < N; i++) {
