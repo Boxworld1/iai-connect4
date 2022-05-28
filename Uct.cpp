@@ -94,8 +94,12 @@ void UCT::removeNode(Node* v, int x, int y) {
     Node* newRoot = nullptr;
     for (int i = 0; i < N; i++) {
         if (i != y) {
-            delete v->child[i];
+            // 若多余子节点存在, 则删去
+            if (v->child[i]) {
+                delete v->child[i];
+            }
         } else {
+            // 只保留真正下棋位置对应节点
             newRoot = v->child[i];
         }
     }
