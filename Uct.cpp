@@ -13,7 +13,7 @@ UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* 
 
 void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
 
-    // std::cerr << "[UCT::UCT] init\n";
+    std::cerr << "[UCT::UCT] init\n";
     // 初始化
     lastX = _lastX;
     lastY = _lastY;
@@ -34,6 +34,7 @@ void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
             board[i][j] = _board[i][j];
         }
     }
+    boardPrint(board);
     // std::cerr << "[UCT::UCT] init finished\n";
 
 }
