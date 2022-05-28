@@ -26,6 +26,9 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
 
     // 记录子节点
     child = new Node*[N];
+    for (int i = 0; i < N; i++) {
+        child[i] = nullptr;
+    }
     // std::cerr << "[Node::Node] init finished\n";
 }
 
@@ -104,13 +107,14 @@ Point Node::getMove() {
 
 void Node::clearChild() {
     std::cerr << "[Node::clearChild]\n";
+    if (!child) return; 
     // 清除子节点
     for (int i = 0; i < N; i++) {
         if (child[i]) {
             child[i]->clearChild();
         }
     }
-    if (child) delete[] child;
+    delete[] child;
     canMove.clear();
 }
 
