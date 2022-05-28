@@ -76,7 +76,7 @@ Node* Node::expand() {
             int idx = canMove[i];
             if (checkWin(idx, true)) {
                 countCanMove = 0;
-                // std::cerr << "[Node::expand] Win Pos: " << idx << "\n";
+                std::cerr << "[Node::expand] Win Pos: " << idx << "\n";
                 return saveStatus(idx);
             }
         }
@@ -86,7 +86,7 @@ Node* Node::expand() {
             int idx = canMove[i];
             if (checkWin(idx, false)) {
                 countCanMove = 0;
-                // std::cerr << "[Node::expand] Lose Pos: " << idx << "\n";
+                std::cerr << "[Node::expand] Lose Pos: " << idx << "\n";
                 return saveStatus(idx);
             }
         }
