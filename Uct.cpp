@@ -130,7 +130,7 @@ Point UCT::uctSearch() {
         backup(vl, delta);
     }
 
-    Point tar = root->bestChild()->getMove();
+    Point tar = root->bestChild(false)->getMove();
     updateRoot(root, tar.x, tar.y);
     return tar;
 }
@@ -141,7 +141,7 @@ Node* UCT::treePolicy(Node* v) {
         if (v->canExpend()) {
             return v->expand();
         } else {
-            v = v->bestChild();
+            v = v->bestChild(true);
         }
     }
     return v;

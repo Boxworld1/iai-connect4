@@ -33,7 +33,7 @@ class Node {
 public:
     Node();
     Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, bool _player);
-    Node* bestChild();
+    Node* bestChild(bool move);
     bool canExpend();
     bool end();
     bool getPlayer();

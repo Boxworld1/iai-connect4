@@ -32,10 +32,11 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
     // std::cerr << "[Node::Node] init finished\n";
 }
 
-Node* Node::bestChild() {
+Node* Node::bestChild(bool move) {
     // std::cerr << "[Node::bestChild]\n";
     double tmpScore = -1e20;
     Node* tmpNode = nullptr;
+    int y = -1;
     // 遍历所有列
     for (int i = 0; i < N; i++) {
         if (child[i] == nullptr) continue;
@@ -45,6 +46,16 @@ Node* Node::bestChild() {
         if (score > tmpScore) {
             tmpScore = score;
             tmpNode = child[i];
+            y = i;
+        }
+    }
+    // 选好位置后下棋
+    if (move) {
+        int x = --UCT::curTop[y];
+        UCT::curBoard[x][y] = ((!player)? 1: 2);
+        // 若下棋位置的再下一位是不可下棋点, 则跳过
+        if (x - 1 == noX && y == noY) {
+            UCT::curTop[y]--;
         }
     }
     return tmpNode;
