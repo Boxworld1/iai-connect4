@@ -14,6 +14,7 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
     countCanMove = 0;
     countVisited = 0;
     countWin = 0;
+    checkStat = false;
     timer.set();
 
     // 记录可下子的列编号
@@ -67,10 +68,47 @@ bool Node::canExpend() {
 
 Node* Node::expand() {
     // std::cerr << "[Node::expand]\n";
-    // 随机选择要下的列
+
+    if (!checkStat) {
+        checkStat = true;
+        // 优先选择必胜节点 (进攻)
+        for (int i = 0; i < countCanMove; i++) {
+            int idx = canMove[i];
+            if (checkWin(i, player)) {
+                countCanMove = 0;
+                return saveStatus(idx);
+            }
+        }
+        
+        // 否则选择必败节点 (防守)
+        for (int i = 0; i < countCanMove; i++) {
+            int idx = canMove[i];
+            if (checkWin(i, !player)) {
+                countCanMove = 0;
+                return saveStatus(idx);
+            }
+        }
+    }
+
+    // 最后随机选择要下的列
     srand(timer.get());
     int idx = rand() % countCanMove;
+    return saveStatus(idx);
+}
 
+bool Node::checkWin(int idx, bool now) {
+    int tmpY = canMove[idx];
+    int tmpX = UCT::curTop[tmpY] - 1;
+    UCT::curBoard[tmpX][tmpY] = ((!player)? 1: 2);
+    if ((now && player && userWin(tmpX, tmpY, M, N, UCT::curBoard))||
+        (!now && !player && machineWin(tmpX, tmpY, M, N, UCT::curBoard))) {
+        return true;
+    }
+    UCT::curBoard[tmpX][tmpY] = 0;
+    return false;
+}
+
+Node* Node::saveStatus(int idx) {
     // 对应位置下棋
     int nxtY = canMove[idx];
     int nxtX = --UCT::curTop[nxtY];

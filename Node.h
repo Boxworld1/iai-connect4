@@ -27,6 +27,7 @@ class Node {
     // 当前回合属性
     int posX, posY;
     bool player; // true = player, false = machine
+    bool checkStat;
 
     Timer timer;
 
@@ -35,10 +36,12 @@ public:
     Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, bool _player);
     Node* bestChild(bool move);
     bool canExpend();
-    bool end();
-    Point getMove();
-    Node* expand();
+    bool checkWin(int idx, bool now);
     void clearChild();
+    bool end();
+    Node* expand();
+    Point getMove();
+    Node* saveStatus(int idx);
     ~Node();
 
     friend class UCT;
