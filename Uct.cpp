@@ -97,8 +97,8 @@ void UCT::updateRoot(Node* v, int x, int y) {
             std::cerr << "[UCT::updateRoot] Remove " << i << "\n";
             if (v->child[i]) {
                 v->child[i]->clearChild();
-                delete v->child[i];
-                v->child[i] = nullptr;
+                // delete v->child[i];
+                // v->child[i] = nullptr;
             }
             std::cerr << "[UCT::updateRoot] Remove " << i << " finished\n";
         } else {
