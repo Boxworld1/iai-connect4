@@ -74,7 +74,7 @@ Node* Node::expand() {
         // 优先选择必胜节点 (进攻)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
-            if (checkWin(i, player)) {
+            if (checkWin(i, true)) {
                 countCanMove = 0;
                 return saveStatus(idx);
             }
@@ -83,7 +83,7 @@ Node* Node::expand() {
         // 否则选择必败节点 (防守)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
-            if (checkWin(i, !player)) {
+            if (checkWin(i, false)) {
                 countCanMove = 0;
                 return saveStatus(idx);
             }
@@ -100,8 +100,8 @@ bool Node::checkWin(int idx, bool now) {
     int tmpY = canMove[idx];
     int tmpX = UCT::curTop[tmpY] - 1;
     UCT::curBoard[tmpX][tmpY] = ((!player)? 1: 2);
-    if ((now && player && userWin(tmpX, tmpY, M, N, UCT::curBoard))||
-        (!now && !player && machineWin(tmpX, tmpY, M, N, UCT::curBoard))) {
+    if ((now && machineWin(tmpX, tmpY, M, N, UCT::curBoard))||
+        (!now && userWin(tmpX, tmpY, M, N, UCT::curBoard))) {
         return true;
     }
     UCT::curBoard[tmpX][tmpY] = 0;
