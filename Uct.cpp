@@ -43,10 +43,12 @@ void UCT::boardClear() {
     delete[] curTop;
     for (int i = 0; i < M; i++) delete[] curBoard[i];
     delete[] curBoard;
+    curTop = nullptr;
+    curBoard = nullptr;
 }
 
 void UCT::boardReset() {
-
+    boardClear();
     std::cerr << "[UCT::boardReset]\n";
     boardPrint(board);
     curTop = new int[N];
@@ -102,7 +104,6 @@ Point UCT::uctSearch() {
         Node* vl = treePolicy(root);
         int delta = defaultPolicy(vl);
         backup(vl, delta);
-        boardClear();
     }
 
     Point tar = root->bestChild()->getMove();
