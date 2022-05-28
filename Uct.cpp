@@ -35,6 +35,7 @@ void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
         }
     }
     boardPrint(board);
+    boardReset();
     // std::cerr << "[UCT::UCT] init finished\n";
 
 }
@@ -96,8 +97,7 @@ void UCT::removeNode(Node* v, int x, int y) {
 }
 
 Point UCT::uctSearch() {
-    // std::cerr << "[UCT::uctSearch] search started\n";
-    boardReset();
+    std::cerr << "[UCT::uctSearch] search started\n";
     if (!root) {
         root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     }
