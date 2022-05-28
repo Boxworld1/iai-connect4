@@ -94,12 +94,14 @@ void UCT::updateRoot(Node* v, int x, int y) {
     for (int i = 0; i < N; i++) {
         if (i != y) {
             // 若多余子节点存在, 则删去
+            std::cerr << "[UCT::updateRoot] Remove " << i << "\n";
             if (v->child[i]) {
                 v->child[i]->clearChild();
                 delete v->child[i];
             }
         } else {
             // 只保留真正下棋位置对应节点
+            std::cerr << "[UCT::updateRoot] Keep " << i << "\n";
             newRoot = v->child[i];
         }
     }
