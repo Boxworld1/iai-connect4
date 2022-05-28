@@ -102,17 +102,15 @@ Point Node::getMove() {
     return Point(posX, posY);
 }
 
-void Node::clearArray() {
+void Node::clearChild() {
     // 清除子节点
     for (int i = 0; i < N; i++) {
         if (child[i]) {
-            child[i]->clearArray();
+            child[i]->clearChild();
         }
     }
     delete[] child;
     canMove.clear();
 }
 
-Node::~Node() {
-    clearArray();
-}
+Node::~Node() {}

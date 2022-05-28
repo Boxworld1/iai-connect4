@@ -39,7 +39,7 @@ public:
     bool getPlayer();
     Point getMove();
     Node* expand();
-    void clearArray();
+    void clearChild();
     ~Node();
 
     friend class UCT;

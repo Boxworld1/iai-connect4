@@ -95,6 +95,7 @@ void UCT::updateRoot(Node* v, int x, int y) {
         if (i != y) {
             // 若多余子节点存在, 则删去
             if (v->child[i]) {
+                v->child[i]->clearChild();
                 delete v->child[i];
             }
         } else {
