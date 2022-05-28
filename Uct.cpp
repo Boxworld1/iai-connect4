@@ -45,6 +45,8 @@ void UCT::boardClear() {
 }
 
 void UCT::boardReset() {
+
+    std::cerr << "[UCT::boardReset]\n";
     curTop = new int[N];
     for (int i = 0; i < N; i++) {
         curTop[i] = top[i];
@@ -144,8 +146,7 @@ double UCT::defaultPolicy(Node* v) {
         }
 
         // 下棋
-        tmpTop[idx]--;
-        int x = tmpTop[idx], y = idx;
+        int x = --tmpTop[idx], y = idx;
         tmpBoard[x][y] = (player? 1: 2);
         // std::cerr << x << " " << y << ": " << tmpBoard[x][y] << "\n";
 
@@ -166,7 +167,6 @@ double UCT::defaultPolicy(Node* v) {
 
 int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
-
     std::cerr << _x << " " << _y << ": " << 3 - int(player) << "\n";
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < N; j++) {
