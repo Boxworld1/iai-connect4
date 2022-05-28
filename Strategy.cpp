@@ -26,6 +26,9 @@ using namespace std;
         output:
                 你的落子点Point
 */
+
+UCT uct = UCT();
+
 extern "C" Point* getPoint(const int M, const int N, const int* top, const int* _board, const int lastX, const int lastY, const int noX, const int noY) {
     /*
             不要更改这段代码
@@ -53,12 +56,17 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
     //         break;
     //     }
     // }
-    UCT uct = UCT(M, N, noX, noY, lastX, lastY, top, board);
+    // UCT uct = UCT(M, N, noX, noY, lastX, lastY, top, board);
 
     // 检查当前状态, 若未己方下过棋则开新树
-//     int tst = 0;
-//     for (int i = 0; i < M * N; i++) tst += _board[i];
-//     if (tst < 2) 
+    int tst = 0;
+    for (int i = 0; i < M * N; i++) tst += _board[i];
+    if (tst < 2) {
+        uct = UCT(M, N, noX, noY, lastX, lastY, top, board);
+    } else {
+        uct.update(lastX, lastY, top, board);
+    }
+
     std::cerr << lastX << " " << lastY << "\n";
     Point tar = uct.uctSearch();
     x = tar.x;
