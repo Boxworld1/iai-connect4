@@ -75,6 +75,10 @@ void UCT::boardReset() {
 
 void UCT::boardPrint(int** _board) {
     std::cerr << "[UCT::boardPrint]\n";
+    if (!_board) {
+        std::cerr << "Wrong parameter\n";
+        return;
+    }
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < N; j++) {
             std::cerr << _board[i][j] << " ";
