@@ -88,22 +88,22 @@ void UCT::boardPrint(int** _board) {
 }
 
 void UCT::updateRoot(Node* v, int x, int y) {
-    std::cerr << "[UCT::updateRoot] " << x << ", " << y << "\n";
+    // std::cerr << "[UCT::updateRoot] " << x << ", " << y << "\n";
     if (!v) return;
     Node* newRoot = nullptr;
     for (int i = 0; i < N; i++) {
         if (i != y) {
             // 若多余子节点存在, 则删去
-            std::cerr << "[UCT::updateRoot] Remove " << i << "\n";
+            // std::cerr << "[UCT::updateRoot] Remove " << i << "\n";
             if (v->child[i]) {
                 v->child[i]->clearChild();
                 // delete v->child[i];
                 // v->child[i] = nullptr;
             }
-            std::cerr << "[UCT::updateRoot] Remove " << i << " finished\n";
+            // std::cerr << "[UCT::updateRoot] Remove " << i << " finished\n";
         } else {
             // 只保留真正下棋位置对应节点
-            std::cerr << "[UCT::updateRoot] Keep " << i << "\n";
+            // std::cerr << "[UCT::updateRoot] Keep " << i << "\n";
             newRoot = v->child[i];
         }
     }
@@ -111,11 +111,11 @@ void UCT::updateRoot(Node* v, int x, int y) {
 }
 
 Point UCT::uctSearch() {
-    std::cerr << "[UCT::uctSearch] search started\n";
+    // std::cerr << "[UCT::uctSearch] search started\n";
 
     updateRoot(root, lastX, lastY);
     if (!root) {
-        std::cerr << "[UCT::uctSearch] create new root\n";
+        // std::cerr << "[UCT::uctSearch] create new root\n";
         root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     }
 

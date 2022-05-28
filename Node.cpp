@@ -106,7 +106,7 @@ Point Node::getMove() {
 }
 
 void Node::clearChild() {
-    std::cerr << "[Node::clearChild]\n";
+    // std::cerr << "[Node::clearChild]\n";
     if (!child) return; 
     // 清除子节点
     for (int i = 0; i < N; i++) {
