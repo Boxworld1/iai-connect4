@@ -89,7 +89,7 @@ void UCT::boardPrint(int** _board) {
 void UCT::updateRoot(Node* v, int x, int y) {
     // std::cerr << "[UCT::updateRoot] " << x << ", " << y << "\n";
     if (!v) return;
-    std::cerr << v->posX << " " << v->posY << "\n";
+    std::cerr << "[Old Root] " << v->posX << " " << v->posY << "\n";
     Node* newRoot = nullptr;
     for (int i = 0; i < N; i++) {
         if (i != y) {
@@ -108,6 +108,7 @@ void UCT::updateRoot(Node* v, int x, int y) {
         }
     }
     root = newRoot;
+    std::cerr << "[New Root] " << root->posX << " " << root->posY << "\n";
 }
 
 Point UCT::uctSearch() {
