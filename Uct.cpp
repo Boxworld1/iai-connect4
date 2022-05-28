@@ -13,7 +13,7 @@ UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* 
 
 void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
 
-    std::cerr << "[UCT::UCT] init\n";
+    // std::cerr << "[UCT::UCT] init\n";
     // 初始化
     lastX = _lastX;
     lastY = _lastY;
@@ -55,7 +55,7 @@ void UCT::boardClear() {
 
 void UCT::boardReset() {
     boardClear();
-    std::cerr << "[UCT::boardReset]\n";
+    // std::cerr << "[UCT::boardReset]\n";
     boardPrint(board);
     curTop = new int[N];
     for (int i = 0; i < N; i++) {
@@ -74,18 +74,18 @@ void UCT::boardReset() {
 }
 
 void UCT::boardPrint(int** _board) {
-    std::cerr << "[UCT::boardPrint]\n";
-    if (!_board) {
-        std::cerr << "Wrong parameter\n";
-        return;
-    }
-    for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            std::cerr << _board[i][j] << " ";
-        }
-        std::cerr << "\n";
-    }
-    std::cerr << "\n";
+    // std::cerr << "[UCT::boardPrint]\n";
+    // if (!_board) {
+    //     std::cerr << "Wrong parameter\n";
+    //     return;
+    // }
+    // for (int i = 0; i < M; i++) {
+    //     for (int j = 0; j < N; j++) {
+    //         std::cerr << _board[i][j] << " ";
+    //     }
+    //     std::cerr << "\n";
+    // }
+    // std::cerr << "\n";
 }
 
 void UCT::removeNode(Node* v, int x, int y) {
@@ -101,14 +101,14 @@ void UCT::removeNode(Node* v, int x, int y) {
 }
 
 Point UCT::uctSearch() {
-    std::cerr << "[UCT::uctSearch] search started\n";
+    // std::cerr << "[UCT::uctSearch] search started\n";
     if (!root) {
-        std::cerr << "[UCT::uctSearch] create new root\n";
+        // std::cerr << "[UCT::uctSearch] create new root\n";
         root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     }
 
     while (timer.get() < TIME_LIMIT) {
-        std::cerr << "[UCT::uctSearch] check next node\n";
+        // std::cerr << "[UCT::uctSearch] check next node\n";
         // std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
         boardReset();
         Node* vl = treePolicy(root);
@@ -122,7 +122,7 @@ Point UCT::uctSearch() {
 }
 
 Node* UCT::treePolicy(Node* v) {
-    std::cerr << "[UCT::treePolicy]\n";
+    // std::cerr << "[UCT::treePolicy]\n";
     while (!v->end()) {
         if (v->canExpend()) {
             return v->expand();
@@ -193,7 +193,7 @@ double UCT::defaultPolicy(Node* v) {
 int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
 
-    std::cerr << _x << " " << _y << ": " << 3 - int(player) << "\n";
+    // std::cerr << _x << " " << _y << ": " << 3 - int(player) << "\n";
     boardPrint(_board);
     if (_x < 0 || _y < 0) return 5;
     if (player && userWin(_x, _y, M, N, _board)) {
@@ -234,7 +234,7 @@ void UCT::backup(Node* v, double status) {
 }
 
 UCT::~UCT() {
-    std::cerr << "[UCT::~UCT]\n";
+    // std::cerr << "[UCT::~UCT]\n";
     delete[] top;
     for (int i = 0; i < M; i++) delete board[i];
     delete[] board;
