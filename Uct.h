@@ -29,6 +29,7 @@ public:
     void update(int _lastX, int _lastY, const int* _top, int** _board);
     void boardClear();
     void boardReset();
+    void boardPrint(int** _board);
     void removeNode(Node* v, int x, int y);
     Point uctSearch();
     Node* treePolicy(Node* v);
