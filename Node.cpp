@@ -14,7 +14,6 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
     countCanMove = 0;
     countVisited = 0;
     countWin = 0;
-    checkStat = false;
     timer.set();
 
     // 记录可下子的列编号
@@ -71,11 +70,13 @@ Node* Node::expand() {
 
     if (!checkStat) {
         checkStat = true;
+        std::cerr << "[Node::expand] CheckStat \n";
         // 优先选择必胜节点 (进攻)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
-            if (checkWin(i, true)) {
+            if (checkWin(idx, true)) {
                 countCanMove = 0;
+                std::cerr << "[Node::expand] Win Pos: " << idx << "\n";
                 return saveStatus(idx);
             }
         }
@@ -83,8 +84,9 @@ Node* Node::expand() {
         // 否则选择必败节点 (防守)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
-            if (checkWin(i, false)) {
+            if (checkWin(idx, false)) {
                 countCanMove = 0;
+                std::cerr << "[Node::expand] Lose Pos: " << idx << "\n";
                 return saveStatus(idx);
             }
         }

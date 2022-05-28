@@ -27,7 +27,7 @@ class Node {
     // 当前回合属性
     int posX, posY;
     bool player; // true = player, false = machine
-    bool checkStat;
+    bool checkStat = false;
 
     Timer timer;
 
