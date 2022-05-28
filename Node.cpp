@@ -74,9 +74,9 @@ Node* Node::expand() {
         // 优先选择必胜节点 (进攻)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
-            if (checkWin(idx, true)) {
+            if (checkWin(idx, player)) {
                 countCanMove = 0;
-                std::cerr << "[Node::expand] Win Pos: " << idx << "\n";
+                // std::cerr << "[Node::expand] Win Pos: " << idx << "\n";
                 return saveStatus(idx);
             }
         }
@@ -84,9 +84,9 @@ Node* Node::expand() {
         // 否则选择必败节点 (防守)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
-            if (checkWin(idx, false)) {
+            if (checkWin(idx, !player)) {
                 countCanMove = 0;
-                std::cerr << "[Node::expand] Lose Pos: " << idx << "\n";
+                // std::cerr << "[Node::expand] Lose Pos: " << idx << "\n";
                 return saveStatus(idx);
             }
         }
@@ -98,12 +98,16 @@ Node* Node::expand() {
     return saveStatus(idx);
 }
 
-bool Node::checkWin(int idx, bool now) {
+bool Node::checkWin(int idx, bool _player) {
     int tmpY = canMove[idx];
     int tmpX = UCT::curTop[tmpY] - 1;
-    UCT::curBoard[tmpX][tmpY] = ((!player)? 1: 2);
-    if ((now && machineWin(tmpX, tmpY, M, N, UCT::curBoard))||
-        (!now && userWin(tmpX, tmpY, M, N, UCT::curBoard))) {
+    UCT::curBoard[tmpX][tmpY] = (_player? 1: 2);
+    // 检测 AI 是否胜利
+    if (!_player && machineWin(tmpX, tmpY, M, N, UCT::curBoard)) {
+        return true;
+    }
+    // 或者检测用户是否胜利
+    if (_player && userWin(tmpX, tmpY, M, N, UCT::curBoard)) {
         return true;
     }
     UCT::curBoard[tmpX][tmpY] = 0;
