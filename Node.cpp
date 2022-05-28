@@ -103,13 +103,14 @@ Point Node::getMove() {
 }
 
 void Node::clearChild() {
+    std::cerr << "[Node::clearChild]\n";
     // 清除子节点
     for (int i = 0; i < N; i++) {
         if (child[i]) {
             child[i]->clearChild();
         }
     }
-    delete[] child;
+    if (child) delete[] child;
     canMove.clear();
 }
 
