@@ -59,7 +59,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
 //     int tst = 0;
 //     for (int i = 0; i < M * N; i++) tst += _board[i];
 //     if (tst < 2) 
-
+    std::cerr << lastX << " " << lastY << "\n";
     Point tar = uct.uctSearch();
     x = tar.x;
     y = tar.y;

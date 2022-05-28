@@ -89,6 +89,7 @@ void UCT::boardPrint(int** _board) {
 }
 
 void UCT::removeNode(Node* v, int x, int y) {
+    if (!v) return;
     Node* newRoot = nullptr;
     for (int i = 0; i < N; i++) {
         if (i != y) {
@@ -102,6 +103,8 @@ void UCT::removeNode(Node* v, int x, int y) {
 
 Point UCT::uctSearch() {
     // std::cerr << "[UCT::uctSearch] search started\n";
+
+    removeNode(root, lastX, lastY);
     if (!root) {
         // std::cerr << "[UCT::uctSearch] create new root\n";
         root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
@@ -117,7 +120,7 @@ Point UCT::uctSearch() {
     }
 
     Point tar = root->bestChild()->getMove();
-    // removeNode(root, tar.x, tar.y);
+    removeNode(root, tar.x, tar.y);
     return tar;
 }
 
