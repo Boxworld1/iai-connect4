@@ -118,7 +118,7 @@ Point UCT::uctSearch() {
         // std::cerr << "[UCT::uctSearch] create new root\n";
         root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     }
-    std::cerr << root->countWin << " " << root->countVisited << "\n";
+    std::cerr << "[ROOT status]" << root->countWin << " " << root->countVisited << "\n";
 
     while (timer.get() < TIME_LIMIT) {
         // std::cerr << "[UCT::uctSearch] check next node\n";
