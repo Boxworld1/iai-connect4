@@ -67,11 +67,11 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
         uct->update(lastX, lastY, top, board);
     }
 
-    std::cerr << lastX << " " << lastY << "\n";
+    std::cerr << "[User]" << lastX << " " << lastY << "\n";
     Point tar = uct->uctSearch();
     x = tar.x;
     y = tar.y;
-    std::cerr << x << " " << y << "\n";
+    std::cerr << "[AI] " << x << " " << y << "\n";
 
     /*
             不要更改这段代码
