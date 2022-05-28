@@ -67,6 +67,17 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
         uct->update(lastX, lastY, top, board);
     }
 
+    std::cerr << "[TOP]\n";
+    for (int i = 0; i < N; i++) {
+        std::cerr << top[i] << "\n";
+    }
+
+    std::cerr << "[BOARD]\n";
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) std::cerr << board[i][j] << " ";
+        std::cerr << "\n";
+    }
+
     std::cerr << "[User]" << lastX << " " << lastY << "\n";
     Point tar = uct->uctSearch();
     x = tar.x;
