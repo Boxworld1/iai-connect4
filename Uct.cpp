@@ -17,7 +17,6 @@ void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
     // 初始化
     lastX = _lastX;
     lastY = _lastY;
-    root = nullptr;
     timer.set();
 
     // 储存列顶信息
@@ -88,8 +87,8 @@ void UCT::boardPrint(int** _board) {
     // std::cerr << "\n";
 }
 
-void UCT::removeNode(Node* v, int x, int y) {
-    std::cerr << "[UCT::removeNode] " << x << ", " << y << "\n";
+void UCT::updateRoot(Node* v, int x, int y) {
+    std::cerr << "[UCT::updateRoot] " << x << ", " << y << "\n";
     if (!v) return;
     Node* newRoot = nullptr;
     for (int i = 0; i < N; i++) {
@@ -107,11 +106,11 @@ void UCT::removeNode(Node* v, int x, int y) {
 }
 
 Point UCT::uctSearch() {
-    // std::cerr << "[UCT::uctSearch] search started\n";
+    std::cerr << "[UCT::uctSearch] search started\n";
 
-    removeNode(root, lastX, lastY);
+    updateRoot(root, lastX, lastY);
     if (!root) {
-        // std::cerr << "[UCT::uctSearch] create new root\n";
+        std::cerr << "[UCT::uctSearch] create new root\n";
         root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     }
 
@@ -125,7 +124,7 @@ Point UCT::uctSearch() {
     }
 
     Point tar = root->bestChild()->getMove();
-    removeNode(root, tar.x, tar.y);
+    updateRoot(root, tar.x, tar.y);
     return tar;
 }
 

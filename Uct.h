@@ -19,7 +19,7 @@ class UCT {
 
     // 外部信息
     Timer timer;
-    Node* root;
+    Node* root = nullptr;
 
     static int* curTop;
     static int** curBoard;
@@ -30,7 +30,7 @@ public:
     void boardClear();
     void boardReset();
     void boardPrint(int** _board);
-    void removeNode(Node* v, int x, int y);
+    void updateRoot(Node* v, int x, int y);
     Point uctSearch();
     Node* treePolicy(Node* v);
     double defaultPolicy(Node* v);
