@@ -103,11 +103,12 @@ void UCT::removeNode(Node* v, int x, int y) {
 Point UCT::uctSearch() {
     std::cerr << "[UCT::uctSearch] search started\n";
     if (!root) {
+        std::cerr << "[UCT::uctSearch] create new root\n";
         root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     }
 
     while (timer.get() < TIME_LIMIT) {
-        // std::cerr << "[UCT::uctSearch] check next node\n";
+        std::cerr << "[UCT::uctSearch] check next node\n";
         // std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
         boardReset();
         Node* vl = treePolicy(root);
@@ -121,7 +122,7 @@ Point UCT::uctSearch() {
 }
 
 Node* UCT::treePolicy(Node* v) {
-    // std::cerr << "[UCT::treePolicy]\n";
+    std::cerr << "[UCT::treePolicy]\n";
     while (!v->end()) {
         if (v->canExpend()) {
             return v->expand();
