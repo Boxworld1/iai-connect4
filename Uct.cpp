@@ -40,11 +40,16 @@ void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
 }
 
 void UCT::boardClear() {
-    delete[] curTop;
-    for (int i = 0; i < M; i++) delete[] curBoard[i];
-    delete[] curBoard;
-    curTop = nullptr;
-    curBoard = nullptr;
+    if (curTop) {
+        delete[] curTop;
+        curTop = nullptr;
+    }
+    
+    if (curBoard) {
+        for (int i = 0; i < M; i++) delete[] curBoard[i];
+        delete[] curBoard;
+        curBoard = nullptr;
+    }
 }
 
 void UCT::boardReset() {
@@ -224,6 +229,7 @@ void UCT::backup(Node* v, double status) {
 }
 
 UCT::~UCT() {
+    std::cerr << "[UCT::~UCT]\n";
     delete[] top;
     for (int i = 0; i < M; i++) delete board[i];
     delete[] board;
