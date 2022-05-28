@@ -98,7 +98,9 @@ void UCT::updateRoot(Node* v, int x, int y) {
             if (v->child[i]) {
                 v->child[i]->clearChild();
                 delete v->child[i];
+                v->child[i] = nullptr;
             }
+            std::cerr << "[UCT::updateRoot] Remove " << i << " finished\n";
         } else {
             // 只保留真正下棋位置对应节点
             std::cerr << "[UCT::updateRoot] Keep " << i << "\n";
