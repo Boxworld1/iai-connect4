@@ -33,7 +33,6 @@ void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
             board[i][j] = _board[i][j];
         }
     }
-    boardPrint(board);
     boardReset();
     // std::cerr << "[UCT::UCT] init finished\n";
 
@@ -54,7 +53,6 @@ void UCT::boardClear() {
 void UCT::boardReset() {
     boardClear();
     // std::cerr << "[UCT::boardReset]\n";
-    boardPrint(board);
     curTop = new int[N];
     for (int i = 0; i < N; i++) {
         curTop[i] = top[i];
@@ -68,22 +66,21 @@ void UCT::boardReset() {
             curBoard[i][j] = board[i][j];
         }
     }
-    boardPrint(curBoard);
 }
 
 void UCT::boardPrint(int** _board) {
     // std::cerr << "[UCT::boardPrint]\n";
-    // if (!_board) {
-    //     std::cerr << "Wrong parameter\n";
-    //     return;
-    // }
-    // for (int i = 0; i < M; i++) {
-    //     for (int j = 0; j < N; j++) {
-    //         std::cerr << _board[i][j] << " ";
-    //     }
-    //     std::cerr << "\n";
-    // }
-    // std::cerr << "\n";
+    if (!_board) {
+        std::cerr << "Wrong parameter\n";
+        return;
+    }
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < N; j++) {
+            std::cerr << _board[i][j] << " ";
+        }
+        std::cerr << "\n";
+    }
+    std::cerr << "\n";
 }
 
 void UCT::updateRoot(Node* v, int x, int y) {
@@ -149,10 +146,8 @@ Node* UCT::treePolicy(Node* v) {
 
 double UCT::defaultPolicy(Node* v) {
     // std::cerr << "[UCT::defaultPolicy]\n";
-    Point pt = v->getMove();
-
-    int x = pt.x;
-    int y = pt.y;
+    int x = v->posX;
+    int y = v->posY;
 
     int* tmpTop = new int[N];
     for (int i = 0; i < N; i++) {
@@ -169,7 +164,7 @@ double UCT::defaultPolicy(Node* v) {
 
     // std::cerr << "[UCT::defaultPolicy] copy finished\n";
 
-    bool player = v->getPlayer();
+    bool player = v->player;
     int score = getScore(x, y, tmpTop, tmpBoard, player);
 
     // std::cerr << "[UCT::defaultPolicy] simulation\n";
@@ -208,7 +203,6 @@ int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
     // std::cerr << "[UCT::getScore]\n";
 
     // std::cerr << _x << " " << _y << ": " << 3 - int(player) << "\n";
-    boardPrint(_board);
     if (_x < 0 || _y < 0) return 5;
     if (player && userWin(_x, _y, M, N, _board)) {
         // for (int i = 0; i < M; i++) {

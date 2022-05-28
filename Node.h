@@ -36,7 +36,6 @@ public:
     Node* bestChild(bool move);
     bool canExpend();
     bool end();
-    bool getPlayer();
     Point getMove();
     Node* expand();
     void clearChild();

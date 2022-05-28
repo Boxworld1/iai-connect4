@@ -108,10 +108,6 @@ bool Node::end() {
     return false;
 }
 
-bool Node::getPlayer() {
-    return player;
-}
-
 Point Node::getMove() {
     return Point(posX, posY);
 }

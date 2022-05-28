@@ -58,7 +58,7 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
     // }
     // UCT uct = UCT(M, N, noX, noY, lastX, lastY, top, board);
 
-    // 检查当前状态, 若未己方下过棋则开新树
+    // 检查当前状态, 若己方未下过棋则开新树
     int tst = 0;
     for (int i = 0; i < M * N; i++) tst += _board[i];
     if (tst < 2) {
