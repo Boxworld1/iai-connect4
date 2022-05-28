@@ -48,6 +48,7 @@ void UCT::boardClear() {
 void UCT::boardReset() {
 
     std::cerr << "[UCT::boardReset]\n";
+    boardPrint(board);
     curTop = new int[N];
     for (int i = 0; i < N; i++) {
         curTop[i] = top[i];
