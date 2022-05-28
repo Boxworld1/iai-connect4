@@ -27,7 +27,7 @@ using namespace std;
                 你的落子点Point
 */
 
-UCT uct = UCT();
+UCT* uct = nullptr;
 
 extern "C" Point* getPoint(const int M, const int N, const int* top, const int* _board, const int lastX, const int lastY, const int noX, const int noY) {
     /*
@@ -62,13 +62,13 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
     int tst = 0;
     for (int i = 0; i < M * N; i++) tst += _board[i];
     if (tst < 2) {
-        uct = UCT(M, N, noX, noY, lastX, lastY, top, board);
+        uct = new UCT(M, N, noX, noY, lastX, lastY, top, board);
     } else {
-        uct.update(lastX, lastY, top, board);
+        uct->update(lastX, lastY, top, board);
     }
 
     std::cerr << lastX << " " << lastY << "\n";
-    Point tar = uct.uctSearch();
+    Point tar = uct->uctSearch();
     x = tar.x;
     y = tar.y;
     std::cerr << x << " " << y << "\n";
