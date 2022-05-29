@@ -148,8 +148,9 @@ double UCT::defaultPolicy(Node* v) {
         }
     }
 
-    bool player = v->player;
-    int score = getScore(x, y, tmpTop, tmpBoard, player);
+    bool orgPlayer = v->player;
+    bool player = orgPlayer;
+    int score = getScore(x, y, tmpTop, tmpBoard, orgPlayer, player);
 
     while (score > 1) {
         // 回合切换
@@ -172,7 +173,7 @@ double UCT::defaultPolicy(Node* v) {
             tmpTop[y]--;
         }
 
-        score = getScore(x, y, tmpTop, tmpBoard, player);
+        score = getScore(x, y, tmpTop, tmpBoard, orgPlayer, player);
     }
 
     delete[] tmpTop;
@@ -182,10 +183,16 @@ double UCT::defaultPolicy(Node* v) {
     return score;
 }
 
-double UCT::getScore(int _x, int _y, int* _top, int** _board, bool _player) {
+double UCT::getScore(int _x, int _y, int* _top, int** _board, bool _orgPlayer, bool _player) {
     if (_x < 0 || _y < 0) return 5;
-    if (_player && userWin(_x, _y, M, N, _board)) return -1;
-    if (!_player && machineWin(_x, _y, M, N, _board)) return 1;
+    if (_player && userWin(_x, _y, M, N, _board)) {
+        if (_orgPlayer) return 1;
+        return -1;
+    }
+    if (!_player && machineWin(_x, _y, M, N, _board)) {
+        if (_orgPlayer) return -1;
+        return 1;
+    }
     if (isTie(N, top)) return 0;
     return 10;
 }
@@ -195,6 +202,7 @@ void UCT::backup(Node* v, double status) {
     while (v) {
         v->countVisited ++;
         v->countWin += status;
+        status = - status;
         v = v->parent;
     }
 }
