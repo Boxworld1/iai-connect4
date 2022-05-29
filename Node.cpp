@@ -87,10 +87,46 @@ Node* Node::expand() {
         }
     }
 
-    // 最后随机选择要下的列
+    int idx = 0;
+
+    std::vector<int> rank;
+    for (int i = 0; i < countCanMove; i++) rank.push_back(i);
     srand(timer.get());
-    int idx = rand() % countCanMove;
+    std::random_shuffle(rank.begin(), rank.end());
+
+    // 最后随机选择要下的列
+    for (idx = 0; idx < countCanMove; idx++) {
+        if (noGun(idx)) break;
+    }
+
+    idx %= countCanMove;
     return saveStatus(idx);
+}
+
+bool Node::noGun(int idx) {
+    int tmpY = canMove[idx];
+    int topY = UCT::curTop[tmpY] - 1;
+    int tmpX = topY;
+    UCT::curBoard[tmpX][tmpY] = ((!player)? 1: 2);
+    if (tmpX - 1 == noX && tmpY == noY) {
+        topY--;
+    }
+    // 若当前列无可下位置或本局已无其他可行列, 则不会点炮
+    if (!topY || countCanMove <= 1) {
+        return true;
+    }
+    // 否则在当前列上方下对方的棋, 检查是否点炮
+    UCT::curBoard[topY][tmpY] = ((player)? 1: 2);
+    if ((player && userWin(tmpX, tmpY, M, N, UCT::curBoard)) || 
+        (!player && machineWin(tmpX, tmpY, M, N, UCT::curBoard))) {
+        // 若会点炮, 则重置
+        UCT::curBoard[tmpX][tmpY] = 0;
+        UCT::curBoard[topY][tmpY] = 0;
+        return false;
+    }
+    UCT::curBoard[tmpX][tmpY] = 0;
+    UCT::curBoard[topY][tmpY] = 0;
+    return true;
 }
 
 bool Node::checkWin(int idx, bool _player) {

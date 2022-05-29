@@ -2,6 +2,7 @@
 #define NODE_H_
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <cmath>
 #include "Judge.h"
@@ -41,6 +42,7 @@ public:
     bool end();
     Node* expand();
     Point getMove();
+    bool noGun(int idx);
     Node* saveStatus(int idx);
     ~Node();
 
