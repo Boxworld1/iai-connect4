@@ -40,7 +40,7 @@ Node* Node::bestChild(bool move) {
     // 遍历所有列
     for (int i = 0; i < N; i++) {
         if (child[i] == nullptr) continue;
-        int win = child[i]->countWin;
+        int win = child[i]->countWin * (player? -1: 1);
         int vis = child[i]->countVisited;
         // 计算收益
         double score = (win * 1.0 / vis + c * sqrt(2.0 * log(countVisited) / vis));

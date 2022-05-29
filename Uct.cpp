@@ -195,7 +195,6 @@ void UCT::backup(Node* v, double status) {
     while (v) {
         v->countVisited ++;
         v->countWin += status;
-        status = -status;
         v = v->parent;
     }
 }
