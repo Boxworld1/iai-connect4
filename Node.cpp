@@ -73,14 +73,14 @@ Node* Node::expand() {
         checkStat = true;
         // 优先选择必胜节点 (进攻)
         for (int i = 0; i < countCanMove; i++) {
-            if (checkWin(i, player)) {
+            if (checkWin(i, !player)) {
                 countCanMove = 0;
                 return saveStatus(i);
             }
         }
         // 否则选择必败节点 (防守)
         for (int i = 0; i < countCanMove; i++) {
-            if (checkWin(i, !player)) {
+            if (checkWin(i, player)) {
                 countCanMove = 0;
                 return saveStatus(i);
             }
@@ -128,7 +128,7 @@ bool Node::noGun(int idx) {
         // 若会点炮, 则不可行
         UCT::curBoard[tmpX][tmpY] = 0;
         UCT::curBoard[topY][tmpY] = 0;
-        std::cerr << "[AVOID] (" << tmpX << ", " << tmpY << ") player:" << 3 - int(player) << "\n";
+        std::cerr << "[AVOID] (" << tmpX << ", " << tmpY << ") player:" << int(player) << "\n";
         return false;
     }
     UCT::curBoard[tmpX][tmpY] = 0;
