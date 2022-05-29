@@ -95,12 +95,10 @@ Node* Node::expand() {
     std::random_shuffle(rank.begin(), rank.end());
 
     // 最后随机选择要下的列
-    for (idx = 0; idx < countCanMove; idx++) {
+    for (int i = 0; i < countCanMove; i++) {
+        idx = rank[i];
         if (noGun(idx)) break;
     }
-
-    // 若全部位置均会点炮, 则无药可救
-    idx %= countCanMove;
 
     return saveStatus(idx);
 }
@@ -117,7 +115,7 @@ bool Node::noGun(int idx) {
     }
     
     // 若当前列无可下位置或本局已无其他可行列, 则不会点炮
-    if (!topY || countCanMove <= 1) {
+    if ((topY - 1) <= 0 || countCanMove <= 1) {
         UCT::curBoard[tmpX][tmpY] = 0;
         return true;
     }
