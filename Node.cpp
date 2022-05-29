@@ -104,7 +104,6 @@ Node* Node::expand() {
 }
 
 bool Node::noGun(int idx) {
-    return true;
     int tmpY = canMove[idx];
     int topY = UCT::curTop[tmpY] - 1;
     int tmpX = topY;
