@@ -75,7 +75,7 @@ Node* Node::expand() {
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
             if (checkWin(idx, player)) {
-                countCanMove = 1;
+                countCanMove = 0;
                 return saveStatus(idx);
             }
         }
@@ -83,7 +83,7 @@ Node* Node::expand() {
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
             if (checkWin(idx, !player)) {
-                countCanMove = 1;
+                countCanMove = 0;
                 return saveStatus(idx);
             }
         }
