@@ -75,28 +75,28 @@ Node* Node::expand() {
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
             if (checkWin(idx, player)) {
-                countCanMove = 0;
-                return saveStatus(i);
+                countCanMove = 1;
+                return saveStatus(idx);
             }
         }
         // 否则选择必败节点 (防守)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
             if (checkWin(idx, !player)) {
-                countCanMove = 0;
-                return saveStatus(i);
+                countCanMove = 1;
+                return saveStatus(idx);
             }
         }
     }
 
     // 最后随机选择要下的列
     srand(timer.get());
-    int idx = rand() % countCanMove;
+    int idx = canMove[rand() % countCanMove];
     return saveStatus(idx);
 }
 
 bool Node::checkWin(int idx, bool _player) {
-    int tmpY = canMove[idx];
+    int tmpY = idx;
     int tmpX = UCT::curTop[tmpY] - 1;
     UCT::curBoard[tmpX][tmpY] = (_player? 1: 2);
     // 检测 AI 是否胜利
@@ -113,7 +113,7 @@ bool Node::checkWin(int idx, bool _player) {
 
 Node* Node::saveStatus(int idx) {
     // 对应位置下棋
-    int nxtY = canMove[idx];
+    int nxtY = idx;
     int nxtX = --UCT::curTop[nxtY];
     UCT::curBoard[nxtX][nxtY] = ((!player)? 1: 2);
 
