@@ -123,8 +123,8 @@ bool Node::noGun(int idx) {
     // 否则在当前列上方下对方的棋, 检查是否点炮
     topY--;
     UCT::curBoard[topY][tmpY] = ((player)? 1: 2);
-    if ((player && userWin(topY, tmpY, M, N, UCT::curBoard)) || 
-        (!player && machineWin(topY, tmpY, M, N, UCT::curBoard))) {
+    if ((player && machineWin(topY, tmpY, M, N, UCT::curBoard)) || 
+        (!player && userWin(topY, tmpY, M, N, UCT::curBoard))) {
         // 若会点炮, 则不可行
         UCT::curBoard[tmpX][tmpY] = 0;
         UCT::curBoard[topY][tmpY] = 0;
