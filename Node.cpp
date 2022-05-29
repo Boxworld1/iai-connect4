@@ -89,8 +89,8 @@ Node* Node::expand() {
 
     int idx = 0;
 
-    std::vector<int> rank;
-    for (int i = 0; i < countCanMove; i++) rank.push_back(i);
+    std::vector<int> rank(countCanMove);
+    for (int i = 0; i < countCanMove; i++) rank[i] = i;
     srand(timer.get());
     std::random_shuffle(rank.begin(), rank.end());
 
@@ -115,7 +115,7 @@ bool Node::noGun(int idx) {
     }
     
     // 若当前列无可下位置或本局已无其他可行列, 则不会点炮
-    if ((topY - 1) <= 0 || countCanMove <= 1) {
+    if (topY <= 0 || countCanMove <= 1) {
         UCT::curBoard[tmpX][tmpY] = 0;
         return true;
     }
