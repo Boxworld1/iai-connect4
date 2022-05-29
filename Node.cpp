@@ -7,8 +7,6 @@ Node::Node() {
 
 Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _posY, bool _player): 
     parent(_parent), M(_M), N(_N), noX(_noX), noY(_noY), posX(_posX), posY(_posY), player(_player) {
-    
-    // std::cerr << "[Node::Node] init\n";
     // 初始化
     canMove.clear();
     countCanMove = 0;
@@ -29,11 +27,9 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
     for (int i = 0; i < N; i++) {
         child[i] = nullptr;
     }
-    // std::cerr << "[Node::Node] init finished\n";
 }
 
 Node* Node::bestChild(bool move) {
-    // std::cerr << "[Node::bestChild]\n";
     double tmpScore = -1e20;
     Node* tmpNode = nullptr;
     int y = -1;
@@ -128,11 +124,6 @@ bool Node::noGun(int idx) {
         // 若会点炮, 则不可行
         UCT::curBoard[tmpX][tmpY] = 0;
         UCT::curBoard[topY][tmpY] = 0;
-
-        // std::cerr << "[WARNING] avoid (" << tmpX << ", " << tmpY << ") as ";
-        // if (player) std::cerr << "user wins.\n";
-        // else std::cerr << "AI wins.\n";
-
         return false;
     }
     UCT::curBoard[tmpX][tmpY] = 0;

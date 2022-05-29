@@ -12,8 +12,6 @@ UCT::UCT(int _M, int _N, int _noX, int _noY, int _lastX, int _lastY, const int* 
 }
 
 void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
-
-    // std::cerr << "[UCT::UCT] init\n";
     // 初始化
     lastX = _lastX;
     lastY = _lastY;
@@ -34,7 +32,6 @@ void UCT::update(int _lastX, int _lastY, const int* _top, int** _board) {
         }
     }
     boardReset();
-    // std::cerr << "[UCT::UCT] init finished\n";
 
 }
 
@@ -52,7 +49,6 @@ void UCT::boardClear() {
 
 void UCT::boardReset() {
     boardClear();
-    // std::cerr << "[UCT::boardReset]\n";
     curTop = new int[N];
     for (int i = 0; i < N; i++) {
         curTop[i] = top[i];
@@ -66,21 +62,6 @@ void UCT::boardReset() {
             curBoard[i][j] = board[i][j];
         }
     }
-}
-
-void UCT::boardPrint(int** _board) {
-    // std::cerr << "[UCT::boardPrint]\n";
-    if (!_board) {
-        std::cerr << "Wrong parameter\n";
-        return;
-    }
-    for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            std::cerr << _board[i][j] << " ";
-        }
-        std::cerr << "\n";
-    }
-    std::cerr << "\n";
 }
 
 void UCT::updateRoot(Node* v, int x, int y) {
@@ -105,7 +86,6 @@ void UCT::updateRoot(Node* v, int x, int y) {
 Point UCT::uctSearch() {
     updateRoot(root, lastX, lastY);
     if (!root) root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
-    std::cerr << "[ROOT status]" << root->countWin << " " << root->countVisited << "\n";
 
     while (timer.get() < TIME_LIMIT) {
         boardReset();
@@ -116,7 +96,6 @@ Point UCT::uctSearch() {
 
     Point tar = root->bestChild(false)->getMove();
     updateRoot(root, tar.x, tar.y);
-    if (root) std::cerr << "[ROOT status]" << root->countWin << " " << root->countVisited << "\n";
     return tar;
 }
 
@@ -135,6 +114,7 @@ double UCT::defaultPolicy(Node* v) {
     int x = v->posX;
     int y = v->posY;
 
+    // 复制棋盘
     int* tmpTop = new int[N];
     for (int i = 0; i < N; i++) {
         tmpTop[i] = curTop[i];
@@ -151,7 +131,8 @@ double UCT::defaultPolicy(Node* v) {
     bool orgPlayer = v->player;
     bool player = orgPlayer;
     int score = getScore(x, y, tmpTop, tmpBoard, orgPlayer, player);
-
+    
+    // 随机下子
     while (score > 1) {
         // 回合切换
         player = !player;
@@ -166,7 +147,6 @@ double UCT::defaultPolicy(Node* v) {
         // 下棋
         int x = --tmpTop[idx], y = idx;
         tmpBoard[x][y] = (player? 1: 2);
-        // std::cerr << x << " " << y << ": " << tmpBoard[x][y] << "\n";
 
         // 若下棋位置的再下一位是不可下棋点, 则跳过
         if (x - 1 == noX && y == noY) {
@@ -198,7 +178,6 @@ double UCT::getScore(int _x, int _y, int* _top, int** _board, bool _orgPlayer, b
 }
 
 void UCT::backup(Node* v, double status) {
-    // std::cerr << "[UCT::backup]\n";
     while (v) {
         v->countVisited ++;
         v->countWin += status;
@@ -208,7 +187,6 @@ void UCT::backup(Node* v, double status) {
 }
 
 UCT::~UCT() {
-    // std::cerr << "[UCT::~UCT]\n";
     delete[] top;
     for (int i = 0; i < M; i++) delete board[i];
     delete[] board;
