@@ -128,9 +128,11 @@ bool Node::noGun(int idx) {
         // 若会点炮, 则不可行
         UCT::curBoard[tmpX][tmpY] = 0;
         UCT::curBoard[topY][tmpY] = 0;
-        std::cerr << "[AVOID] (" << tmpX << ", " << tmpY << ") as ";
-        if (player) std::cerr << " user wins.\n";
-        else std::cerr << "AI wins.";
+
+        std::cerr << "[WARNING] avoid (" << tmpX << ", " << tmpY << ") as ";
+        if (player) std::cerr << "user wins.\n";
+        else std::cerr << "AI wins.\n";
+
         return false;
     }
     UCT::curBoard[tmpX][tmpY] = 0;
