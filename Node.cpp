@@ -42,6 +42,7 @@ Node* Node::bestChild(bool move) {
         if (child[i] == nullptr) continue;
         int win = child[i]->countWin;
         int vis = child[i]->countVisited;
+        // 计算收益
         double score = (win * 1.0 / vis + c * sqrt(2.0 * log(countVisited) / vis));
         if (score > tmpScore) {
             tmpScore = score;
@@ -66,28 +67,24 @@ bool Node::canExpend() {
 }
 
 Node* Node::expand() {
-    // std::cerr << "[Node::expand]\n";
 
+    // 扩展新节点前检查一步内是否出现终止局面
     if (!checkStat) {
         checkStat = true;
-        // std::cerr << "[Node::expand] CheckStat \n";
         // 优先选择必胜节点 (进攻)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
             if (checkWin(idx, player)) {
                 countCanMove = 0;
-                // std::cerr << "[Node::expand] Win Pos: " << idx << "\n";
-                return saveStatus(idx);
+                return saveStatus(i);
             }
         }
-        
         // 否则选择必败节点 (防守)
         for (int i = 0; i < countCanMove; i++) {
             int idx = canMove[i];
             if (checkWin(idx, !player)) {
                 countCanMove = 0;
-                // std::cerr << "[Node::expand] Lose Pos: " << idx << "\n";
-                return saveStatus(idx);
+                return saveStatus(i);
             }
         }
     }
@@ -131,12 +128,10 @@ Node* Node::saveStatus(int idx) {
     countCanMove--;
     child[nxtY] = tmp;
 
-    // std::cerr << "[Node::expand] Node expend finished\n";
     return tmp;
 }
 
 bool Node::end() {
-    // std::cerr << "[Node::end] Node status check\n";
     // 若尚未下棋
     if (posX == -1 && posY == -1) {
         return false;
@@ -148,7 +143,6 @@ bool Node::end() {
         (isTie(N, UCT::curTop))) {
         return true;
     }
-    // std::cerr << "[Node::end] status: game continue\n";
     return false;
 }
 
@@ -157,7 +151,6 @@ Point Node::getMove() {
 }
 
 void Node::clearChild() {
-    // std::cerr << "[Node::clearChild]\n";
     if (!child) return; 
     // 清除子节点
     for (int i = 0; i < N; i++) {

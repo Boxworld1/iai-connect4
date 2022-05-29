@@ -84,48 +84,33 @@ void UCT::boardPrint(int** _board) {
 }
 
 void UCT::updateRoot(Node* v, int x, int y) {
-    // std::cerr << "[UCT::updateRoot] " << x << ", " << y << "\n";
     if (!v) return;
-    std::cerr << "[Old Root] " << v->posX << " " << v->posY << "\n";
     Node* newRoot = nullptr;
     for (int i = 0; i < N; i++) {
         if (i != y) {
             // 若多余子节点存在, 则删去
-            // std::cerr << "[UCT::updateRoot] Remove " << i << "\n";
             if (v->child[i]) {
                 v->child[i]->clearChild();
                 // delete v->child[i];
                 // v->child[i] = nullptr;
             }
-            // std::cerr << "[UCT::updateRoot] Remove " << i << " finished\n";
         } else {
             // 只保留真正下棋位置对应节点
-            // std::cerr << "[UCT::updateRoot] Keep " << i << "\n";
             newRoot = v->child[i];
         }
     }
     root = newRoot;
-    if (root) {
-        std::cerr << "[New Root] " << root->posX << " " << root->posY << "\n";
-    }
 }
 
 Point UCT::uctSearch() {
-    // std::cerr << "[UCT::uctSearch] search started\n";
-
     updateRoot(root, lastX, lastY);
-    if (!root) {
-        // std::cerr << "[UCT::uctSearch] create new root\n";
-        root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
-    }
+    if (!root) root = new Node(nullptr, M, N, noX, noY, lastX, lastY, true);
     std::cerr << "[ROOT status]" << root->countWin << " " << root->countVisited << "\n";
 
     while (timer.get() < TIME_LIMIT) {
-        // std::cerr << "[UCT::uctSearch] check next node\n";
-        // std::cerr << "[UCT::uctSearch] check time: " << timer.get() << "\n";
         boardReset();
         Node* vl = treePolicy(root);
-        int delta = defaultPolicy(vl);
+        double delta = defaultPolicy(vl);
         backup(vl, delta);
     }
 
@@ -135,7 +120,6 @@ Point UCT::uctSearch() {
 }
 
 Node* UCT::treePolicy(Node* v) {
-    // std::cerr << "[UCT::treePolicy]\n";
     while (!v->end()) {
         if (v->canExpend()) {
             return v->expand();
@@ -147,7 +131,6 @@ Node* UCT::treePolicy(Node* v) {
 }
 
 double UCT::defaultPolicy(Node* v) {
-    // std::cerr << "[UCT::defaultPolicy]\n";
     int x = v->posX;
     int y = v->posY;
 
@@ -164,12 +147,9 @@ double UCT::defaultPolicy(Node* v) {
         }
     }
 
-    // std::cerr << "[UCT::defaultPolicy] copy finished\n";
-
     bool player = v->player;
     int score = getScore(x, y, tmpTop, tmpBoard, player);
 
-    // std::cerr << "[UCT::defaultPolicy] simulation\n";
     while (score > 1) {
         // 回合切换
         player = !player;
@@ -202,33 +182,9 @@ double UCT::defaultPolicy(Node* v) {
 }
 
 int UCT::getScore(int _x, int _y, int* _top, int** _board, bool player) {
-    // std::cerr << "[UCT::getScore]\n";
-
-    // std::cerr << _x << " " << _y << ": " << 3 - int(player) << "\n";
     if (_x < 0 || _y < 0) return 5;
-    if (player && userWin(_x, _y, M, N, _board)) {
-        // for (int i = 0; i < M; i++) {
-        //     for (int j = 0; j < N; j++) {
-        //         std::cerr << _board[i][j] << " ";
-        //     }
-        //     std::cerr << "\n";
-        // }
-        // std::cerr << "\n";
-        // std::cerr << "Score: -1\n";
-        return -1;
-    }
-    if (!player && machineWin(_x, _y, M, N, _board)) {
-        // for (int i = 0; i < M; i++) {
-        //     for (int j = 0; j < N; j++) {
-        //         std::cerr << _board[i][j] << " ";
-        //     }
-        //     std::cerr << "\n";
-        // }
-        // std::cerr << "\n";
-
-        // std::cerr << "Score: 1\n";
-        return 1;
-    }
+    if (player && userWin(_x, _y, M, N, _board)) return -1;
+    if (!player && machineWin(_x, _y, M, N, _board)) return 1;
     if (isTie(N, top)) return 0;
     return 10;
 }
