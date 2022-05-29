@@ -116,6 +116,7 @@ Point UCT::uctSearch() {
 
     Point tar = root->bestChild(false)->getMove();
     updateRoot(root, tar.x, tar.y);
+    if (root) std::cerr << "[ROOT status]" << root->countWin << " " << root->countVisited << "\n";
     return tar;
 }
 
