@@ -35,7 +35,7 @@ public:
     Node* treePolicy(Node* v);
     double defaultPolicy(Node* v);
     void backup(Node* v, double status);
-    int getScore(int _x, int _y, int* _top, int** _board, bool player);
+    double getScore(int _x, int _y, int* _top, int** _board, bool player);
     ~UCT();
 
     friend class Node;
