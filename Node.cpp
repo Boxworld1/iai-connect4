@@ -99,7 +99,9 @@ Node* Node::expand() {
         if (noGun(idx)) break;
     }
 
+    // 若全部位置均会点炮, 则无药可救
     idx %= countCanMove;
+
     return saveStatus(idx);
 }
 
@@ -107,19 +109,25 @@ bool Node::noGun(int idx) {
     int tmpY = canMove[idx];
     int topY = UCT::curTop[tmpY] - 1;
     int tmpX = topY;
+
+    // 模拟当前位置下棋
     UCT::curBoard[tmpX][tmpY] = ((!player)? 1: 2);
     if (tmpX - 1 == noX && tmpY == noY) {
         topY--;
     }
+    
     // 若当前列无可下位置或本局已无其他可行列, 则不会点炮
     if (!topY || countCanMove <= 1) {
+        UCT::curBoard[tmpX][tmpY] = 0;
         return true;
     }
+
     // 否则在当前列上方下对方的棋, 检查是否点炮
+    topY--;
     UCT::curBoard[topY][tmpY] = ((player)? 1: 2);
-    if ((player && userWin(tmpX, tmpY, M, N, UCT::curBoard)) || 
-        (!player && machineWin(tmpX, tmpY, M, N, UCT::curBoard))) {
-        // 若会点炮, 则重置
+    if ((player && userWin(topY, tmpY, M, N, UCT::curBoard)) || 
+        (!player && machineWin(topY, tmpY, M, N, UCT::curBoard))) {
+        // 若会点炮, 则不可行
         UCT::curBoard[tmpX][tmpY] = 0;
         UCT::curBoard[topY][tmpY] = 0;
         return false;
