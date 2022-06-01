@@ -38,6 +38,9 @@ Node* Node::bestChild(bool move) {
     int y = -1;
     // 遍历所有列
     for (int i = 0; i < N; i++) {
+        if (UCT::timer.get() > TLE_TIME) {
+            std::cerr << "[Node::bestChild - for]\n";
+        }
         if (child[i] == nullptr) continue;
         int win = child[i]->countWin;
         int vis = child[i]->countVisited;
