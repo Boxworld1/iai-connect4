@@ -206,7 +206,7 @@ double UCT::getScore(int _x, int _y, int* _top, int** _board, bool _orgPlayer, b
             return -1;
         return 1;
     }
-    if (isTie(N, top))
+    if (isTie(N, _top))
         return 0;
     return 10;
 }
@@ -214,7 +214,7 @@ double UCT::getScore(int _x, int _y, int* _top, int** _board, bool _orgPlayer, b
 void UCT::backup(Node* v, double status) {
     while (v) {
         if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::defaultPolicy - bf set]\n";
+            std::cerr << "[UCT::defaultPolicy - bf]\n";
         }
         v->countVisited++;
         v->countWin += status;

@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include "Point.h"
 #include <iostream>
+#include <vector>
 
 #define TIME_LIMIT 2500000000
 #define TLE_TIME 2800000000
