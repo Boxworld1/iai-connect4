@@ -92,22 +92,9 @@ Point UCT::uctSearch() {
 
     while (timer.get() < TIME_LIMIT) {
         boardReset();
-        if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::uctSearch - treepolicy]\n";
-        }
         Node* vl = treePolicy(root);
-        if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::uctSearch - defaultPolicy]\n";
-        }
         double delta = defaultPolicy(vl);
-        if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::uctSearch - backup]\n";
-        }
         backup(vl, delta);
-
-        if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::uctSearch]\n";
-        }
     }
 
     Point tar = root->bestChild(false)->getMove();
@@ -121,9 +108,6 @@ Node* UCT::treePolicy(Node* v) {
             return v->expand();
         } else {
             v = v->bestChild(true);
-        }
-        if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::treePolicy]\n";
         }
     }
     return v;
@@ -161,9 +145,6 @@ double UCT::defaultPolicy(Node* v) {
         int idx = rand() % N;
         while (!tmpTop[idx]) {
             idx = rand() % N;
-            if (timer.get() > TLE_TIME) {
-                std::cerr << "[UCT::defaultPolicy - rand]\n";
-            }
         }
 
         // 下棋
@@ -173,10 +154,6 @@ double UCT::defaultPolicy(Node* v) {
         // 若下棋位置的再下一位是不可下棋点, 则跳过
         if (x - 1 == noX && y == noY) {
             tmpTop[y]--;
-        }
-
-        if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::defaultPolicy]\n";
         }
 
         score = getScore(x, y, tmpTop, tmpBoard, orgPlayer, player);
@@ -191,9 +168,6 @@ double UCT::defaultPolicy(Node* v) {
 }
 
 double UCT::getScore(int _x, int _y, int* _top, int** _board, bool _orgPlayer, bool _player) {
-    if (timer.get() > TLE_TIME) {
-        std::cerr << "[UCT::getScore]\n";
-    }
     if (_x < 0 || _y < 0)
         return 5;
     if (_player && userWin(_x, _y, M, N, _board)) {
@@ -213,16 +187,10 @@ double UCT::getScore(int _x, int _y, int* _top, int** _board, bool _orgPlayer, b
 
 void UCT::backup(Node* v, double status) {
     while (v) {
-        if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::defaultPolicy - bf]\n";
-        }
         v->countVisited++;
         v->countWin += status;
         status = -status;
         v = v->parent;
-        if (timer.get() > TLE_TIME) {
-            std::cerr << "[UCT::defaultPolicy]\n";
-        }
     }
 }
 
