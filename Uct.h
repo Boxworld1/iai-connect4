@@ -7,7 +7,7 @@
 #include <iostream>
 
 #define TIME_LIMIT 2500000000
-#define TLE_TIME 3000000000
+#define TLE_TIME 2800000000
 
 
 class UCT {

@@ -30,6 +30,9 @@ Node::Node(Node* _parent, int _M, int _N, int _noX, int _noY, int _posX, int _po
 }
 
 Node* Node::bestChild(bool move) {
+    if (UCT::timer.get() > TLE_TIME) {
+        std::cerr << "[Node::bestChild]\n";
+    }
     double tmpScore = -1e20;
     Node* tmpNode = nullptr;
     int y = -1;
@@ -63,7 +66,10 @@ bool Node::canExpend() {
 }
 
 Node* Node::expand() {
-    std::cerr << "[Node::expand] " << UCT::timer.get() << "\n";
+    if (UCT::timer.get() > TLE_TIME) {
+        std::cerr << "[Node::expand]\n";
+    }
+    
     // 扩展新节点前检查一步内是否出现终止局面
     if (!checkStat) {
         checkStat = true;
@@ -100,6 +106,9 @@ Node* Node::expand() {
 }
 
 bool Node::noGun(int idx) {
+    if (UCT::timer.get() > TLE_TIME) {
+        std::cerr << "[Node::noGun]\n";
+    }
     int tmpY = canMove[idx];
     int topY = UCT::curTop[tmpY] - 1;
     int tmpX = topY;
@@ -150,6 +159,9 @@ bool Node::checkWin(int idx, bool _player) {
 }
 
 Node* Node::saveStatus(int idx) {
+    if (UCT::timer.get() > TLE_TIME) {
+        std::cerr << "[Node::saveStatus]\n";
+    }
     // 对应位置下棋
     int nxtY = canMove[idx];
     int nxtX = --UCT::curTop[nxtY];
@@ -170,6 +182,9 @@ Node* Node::saveStatus(int idx) {
 }
 
 bool Node::end() {
+    if (UCT::timer.get() > TLE_TIME) {
+        std::cerr << "[Node::end]\n";
+    }
     // 若尚未下棋
     if (posX == -1 && posY == -1) {
         return false;
