@@ -96,9 +96,6 @@ Point UCT::uctSearch() {
         double delta = defaultPolicy(vl);
         backup(vl, delta);
     }
-    if (root) {
-        std::cerr << root->countWin << " " << root->countVisited << "\n";
-    }
     Point tar = root->bestChild(false)->getMove();
     updateRoot(root, tar.x, tar.y);
     
