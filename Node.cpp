@@ -63,7 +63,7 @@ bool Node::canExpend() {
 }
 
 Node* Node::expand() {
-
+    std::cerr << "[Node::expand] " << UCT::timer.get() << "\n";
     // 扩展新节点前检查一步内是否出现终止局面
     if (!checkStat) {
         checkStat = true;

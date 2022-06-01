@@ -3,6 +3,7 @@
 // 全局变量初始化
 int* UCT::curTop = nullptr;
 int** UCT::curBoard = nullptr;
+Timer UCT::timer = Timer();
 
 UCT::UCT() {}
 

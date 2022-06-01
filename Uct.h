@@ -19,9 +19,9 @@ class UCT {
     int **board;
 
     // 外部信息
-    Timer timer;
     Node* root = nullptr;
 
+    static Timer timer;
     static int* curTop;
     static int** curBoard;
 public:
