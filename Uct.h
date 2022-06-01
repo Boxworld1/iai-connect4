@@ -6,7 +6,8 @@
 #include "Point.h"
 #include <iostream>
 
-#define TIME_LIMIT 2000000000
+#define TIME_LIMIT 2500000000
+#define TLE_TIME 3000000000
 
 
 class UCT {

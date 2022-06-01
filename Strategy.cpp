@@ -48,40 +48,20 @@ extern "C" Point* getPoint(const int M, const int N, const int* top, const int* 
     */
     // Add your own code below
 
-    // a naive example
-    // for (int i = N - 1; i >= 0; i--) {
-    //     if (top[i] > 0) {
-    //         x = top[i] - 1;
-    //         y = i;
-    //         break;
-    //     }
-    // }
-    // UCT uct = UCT(M, N, noX, noY, lastX, lastY, top, board);
-
     // 检查当前状态, 若己方未下过棋则开新树
     int tst = 0;
-    for (int i = 0; i < M * N; i++) tst += _board[i];
+    for (int i = 0; i < M * N; i++)
+        tst += _board[i];
     if (tst < 2) {
         uct = new UCT(M, N, noX, noY, lastX, lastY, top, board);
     } else {
         uct->update(lastX, lastY, top, board);
     }
 
-    // std::cerr << "[TOP]\n";
-    // for (int i = 0; i < N; i++) {
-    //     std::cerr << top[i] << " ";
-    // }
-    // std::cerr << "\n";
-
-    // std::cerr << "[BOARD]\n";
-    // for (int i = 0; i < M; i++) {
-    //     for (int j = 0; j < N; j++) std::cerr << board[i][j] << " ";
-    //     std::cerr << "\n";
-    // }
-
     Point tar = uct->uctSearch();
     x = tar.x;
     y = tar.y;
+    std::cerr << "Target " << x << " " << y << "\n";
 
     /*
             不要更改这段代码
